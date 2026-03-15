@@ -6,7 +6,7 @@
 #include "../utils/format_stream.h"
 
 #define THROW(error_class, format_expr) \
-    throw error_class(utils::FormatStream() << format_expr, __FILE__, __LINE__)
+    throw error_class(::utils::FormatStream() << format_expr, __FILE__, __LINE__)
 #define THROW_IF(condition, error_class, format_expr) \
     if (condition) {                                  \
         THROW(error_class, format_expr);              \
