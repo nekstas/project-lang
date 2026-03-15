@@ -10,3 +10,5 @@ KeepEmptyLinesAtTheStartOfBlocks: true
 SortIncludes: CaseInsensitive
 SeparateDefinitionBlocks: Always
 MaxEmptyLinesToKeep: 1
+BreakConstructorInitializers: BeforeComma
+ContinuationIndentWidth: 4
