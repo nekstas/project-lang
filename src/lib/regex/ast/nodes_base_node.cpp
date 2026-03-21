@@ -35,10 +35,10 @@ bool NodesBaseNode::Equals(const Node* another_node) const {
 }
 
 void NodesBaseNode::EnsureInvariants() {
-    THROW_IF(nodes_.size() <= 1, errors::LogicError,
+    THROW_IF(nodes_.size() <= 1, ::errors::LogicError,
              "Nodes list should contain at least two nodes.");
     for (size_t i = 0; i < nodes_.size(); ++i) {
-        THROW_IF(!nodes_[i], errors::LogicError, "Node with index" << i << "is nullptr.");
+        THROW_IF(!nodes_[i], ::errors::LogicError, "Node with index" << i << "is nullptr.");
     }
 }
 

@@ -10,6 +10,10 @@ namespace lang::regex::ast {
 
 enum class RepeatType { ZERO_OR_MORE, ONE_OR_MORE, ZERO_OR_ONE };
 
+uint8_t RepeatTypeToChar(const ast::RepeatType repeat_type);
+
+ast::RepeatType RepeatCharToType(const uint8_t repeat_char);
+
 class RepeatNode : public Node {
 public:
     RepeatNode(std::unique_ptr<Node> node, RepeatType repeat_type);
@@ -31,7 +35,7 @@ public:
 private:
     void EnsureInvariants();
 
-public:
+private:
     std::unique_ptr<Node> node_;
     RepeatType repeat_type_;
 };

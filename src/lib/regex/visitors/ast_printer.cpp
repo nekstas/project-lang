@@ -1,30 +1,19 @@
 #include "ast_printer.h"
 
-#include "../../errors/errors.h"
+#include "../../utils/utils.h"
 #include "../ast/all.h"
+#include "../utils/utils.h"
 
 namespace lang::regex {
 
 namespace {
 
-uint8_t RepeatTypeToChar(const ast::RepeatType repeat_type) {
-    switch (repeat_type) {
-        case ast::RepeatType::ZERO_OR_MORE:
-            return '*';
-        case ast::RepeatType::ONE_OR_MORE:
-            return '+';
-        case ast::RepeatType::ZERO_OR_ONE:
-            return '?';
-        default:
-            THROW(errors::LogicError, "");
-    }
-}
+constexpr std::string kSpecialChars = "\\\n\t'";
 
 }  // namespace
 
-std::string visitors::AstPrinter::ToString(ast::Node *node) {
-    out_.clear();
-    utils::WithIndent{*this};
+std::string visitors::AstPrinter::ToString(const ast::Node *node) {
+    out_.str("");
     if (node == nullptr) {
         Line(out_) << "[null]";
     } else {
@@ -35,11 +24,17 @@ std::string visitors::AstPrinter::ToString(ast::Node *node) {
 
 void visitors::AstPrinter::Visit(const ast::CharNode &node) {
     const auto code = node.GetCode();
-    if (std::isprint(code)) {
+    if (::utils::IsIn(code, kSpecialChars)) {
+        Line(out_) << "['" << utils::GetSpecialCharRepr(code) << "']";
+    } else if (std::isprint(code)) {
         Line(out_) << "['" << code << "']";
     } else {
         Line(out_) << "[(" << static_cast<size_t>(code) << ")]";
     }
+}
+
+void visitors::AstPrinter::Visit(const ast::WideCharNode &node) {
+    Line(out_) << "[\"" << node.GetWideChar() << "\"]";
 }
 
 void visitors::AstPrinter::ProcessNodesBaseNode(const lang::regex::ast::NodesBaseNode &node) {
@@ -68,7 +63,7 @@ void visitors::AstPrinter::Visit(const ast::RepeatNode &node) {
         utils::WithIndent with_indent(*this);
         node.GetNode().Accept(*this);
     }
-    Line(out_) << "[/repeat ]";
+    Line(out_) << "[/repeat]";
 }
 
 }  // namespace lang::regex
