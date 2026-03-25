@@ -1,8 +1,8 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../../../src/lib/errors/errors.h"
+#include "../../../src/lib/regex/parser/parser.h"
 #include "../../../src/lib/regex/visitors/formatter.h"
-#include "utils.h"
 
 TEST_CASE("lang::regex::visitors::Formatter") {
     lang::regex::Parser parser;

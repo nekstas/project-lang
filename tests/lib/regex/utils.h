@@ -3,8 +3,6 @@
 #include <vector>
 
 #include "../../../src/lib/regex/ast/all.h"
-#include "../../../src/lib/regex/parser/parser.h"
-#include "../../../src/lib/regex/visitors/ast_printer.h"
 
 using lang::regex::ast::CharNode;
 using lang::regex::ast::Node;
