@@ -20,13 +20,30 @@ class RepeatNode;
 
 }  // namespace ast
 
+namespace nfa {
+
+class State;
+class StateWrapper;
+class Data;
+class DataWrapper;
+class Nfa;
+
+}  // namespace nfa
+
 namespace visitors {
 
 class Visitor;
 class AstPrinter;
 class Formatter;
+class NfaBuilder;
 
 }  // namespace visitors
+
+namespace algo {
+
+class NfaEngine;
+
+}  // namespace algo
 
 class Parser;
 

@@ -60,4 +60,7 @@ TEST_CASE("lang::regex::Parser errors") {
         REQUIRE_THROWS_AS(make_ast("+"), lang::regex::errors::ParserError);
         REQUIRE_THROWS_AS(make_ast("?"), lang::regex::errors::ParserError);
     }
+    SECTION("Backslash in the end of the string") {
+        REQUIRE_THROWS_AS(make_ast("\\"), lang::regex::errors::ParserError);
+    }
 }

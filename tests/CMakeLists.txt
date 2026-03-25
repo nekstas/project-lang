@@ -7,7 +7,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(test_lib
-    lib/regex/test_ast_printer.cpp)
+add_executable(test_lib)
 target_link_libraries(test_lib PRIVATE Catch2::Catch2WithMain)
 add_subdirectory(lib/regex)

@@ -102,6 +102,7 @@ std::unique_ptr<ast::Node> Parser::ParseSingleChar() {
 
     switch (ch) {
         case '\\':
+            THROW_REGEX_PARSER_ERROR_IF(IsEof(), "Unexpected eof while parsing escaped sequence.");
             ch = Consume();
             switch (ch) {
                 case 'n':
@@ -128,6 +129,7 @@ std::unique_ptr<ast::Node> Parser::ParseSingleChar() {
 std::unique_ptr<ast::Node> Parser::ParseWideChar(size_t char_length) {
     std::string wide_char;
     for (size_t i = 0; i < char_length; ++i) {
+        THROW_REGEX_PARSER_ERROR_IF(IsEof(), "Unexpected eof while parsing utf-8 char.");
         wide_char.push_back(Consume());
     }
     return std::make_unique<ast::WideCharNode>(wide_char);

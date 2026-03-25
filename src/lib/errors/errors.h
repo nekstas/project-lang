@@ -16,6 +16,8 @@
     }                                                      \
     (void)0
 #define UNREACHABLE assert(false && "Code execution reached unreachable line.")
+#define ASSERT_NOT_NULL(condition) \
+    THROW_IF((condition) == nullptr, ::errors::LogicError, "Unexpected null pointer.")
 
 namespace errors {
 
