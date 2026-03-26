@@ -24,8 +24,7 @@ namespace nfa {
 
 class State;
 class StateWrapper;
-class Data;
-class DataWrapper;
+class NfaWrapper;
 class Nfa;
 
 }  // namespace nfa
@@ -41,7 +40,14 @@ class NfaBuilder;
 
 namespace algo {
 
-class NfaEngine;
+namespace nfa {
+
+class Engine;
+class Matcher;
+
+}  // namespace nfa
+
+class Matcher;
 
 }  // namespace algo
 

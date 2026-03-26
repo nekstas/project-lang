@@ -2,15 +2,15 @@
 
 #include <cstdint>
 
-#include "data.h"
+#include "nfa.h"
 
 namespace lang::regex::nfa {
 
-class DataWrapper {
+class NfaWrapper {
 public:
-    DataWrapper();
+    NfaWrapper();
 
-    const Data& GetData() const;
+    const Nfa& GetNfa() const;
     void Clear();
 
     void InitRoot();
@@ -25,7 +25,7 @@ public:
     State& ExtractState(StateWrapper state);
 
 private:
-    Data data_;
+    Nfa nfa_;
 };
 
 }  // namespace lang::regex::nfa

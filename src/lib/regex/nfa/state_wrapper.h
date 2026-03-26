@@ -1,18 +1,18 @@
 #pragma once
 
-#include "data.h"
+#include "nfa.h"
 
 namespace lang::regex::nfa {
 
 class StateWrapper {
 private:
-    friend class DataWrapper;
+    friend class NfaWrapper;
 
 public:
     StateWrapper() = default;
 
 private:
-    StateWrapper(size_t state_id, DataWrapper* data);
+    StateWrapper(size_t state_id, NfaWrapper* nfa);
 
 public:
     void AddEdgeTo(StateWrapper another_state, uint8_t code);
@@ -25,7 +25,7 @@ public:
 
 private:
     size_t state_id_ = 0;
-    DataWrapper* data_ = nullptr;
+    NfaWrapper* nfa_ = nullptr;
 };
 
 }  // namespace lang::regex::nfa

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../fwd.h"
-#include "../nfa/data_wrapper.h"
+#include "../nfa/nfa_wrapper.h"
 #include "../nfa/state_wrapper.h"
 #include "visitor.h"
 
@@ -38,7 +38,7 @@ private:
     RepeatStates MakeRepeatStates(const lang::regex::ast::Node& inner_node);
 
 private:
-    lang::regex::nfa::DataWrapper data_;
+    lang::regex::nfa::NfaWrapper nfa_;
     lang::regex::nfa::StateWrapper last_state_;
 };
 

@@ -6,21 +6,21 @@
 
 namespace lang::regex::visitors {
 
-NfaBuilder::NfaBuilder() : data_(), last_state_(data_.GetRoot()) {}
+NfaBuilder::NfaBuilder() : nfa_(), last_state_(nfa_.GetRoot()) {}
 
 lang::regex::nfa::Nfa NfaBuilder::GetNfa() const {
-    return lang::regex::nfa::Nfa{data_.GetData()};
+    return nfa_.GetNfa();
 }
 
 size_t NfaBuilder::ExtendFromAst(const lang::regex::ast::Node& node) {
-    last_state_ = data_.GetRoot();
+    last_state_ = nfa_.GetRoot();
     node.Accept(*this);
     return last_state_.MakeFinal();
 }
 
 void NfaBuilder::Clear() {
-    data_.Clear();
-    last_state_ = data_.GetRoot();
+    nfa_.Clear();
+    last_state_ = nfa_.GetRoot();
 }
 
 void NfaBuilder::Visit(const lang::regex::ast::CharNode& node) {
@@ -43,7 +43,7 @@ void NfaBuilder::Visit(const lang::regex::ast::ChoiceNode& node) {
         last_states.push_back(last_state_);
     }
 
-    last_state_ = data_.CreateState();
+    last_state_ = nfa_.CreateState();
     for (auto& state : last_states) {
         state.AddEpsEdgeTo(last_state_);
     }
