@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-#include <exception>
 #include <stdexcept>
 
 #include "../utils/format_stream.h"
@@ -23,7 +22,7 @@ namespace errors {
 
 class RuntimeError : public std::runtime_error {
 public:
-    RuntimeError(const std::string& message, const std::string& file, const size_t line);
+    RuntimeError(const std::string& message, const std::string& file, size_t line);
 };
 
 class LogicError : public RuntimeError {
