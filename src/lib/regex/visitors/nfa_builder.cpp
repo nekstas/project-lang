@@ -28,7 +28,7 @@ void NfaBuilder::Visit(const ast::CharNode& node) {
 }
 
 void NfaBuilder::Visit(const ast::WideCharNode& node) {
-    for (uint8_t part : node.GetWideChar()) {
+    for (const uint8_t part : node.GetWideChar()) {
         last_state_ = last_state_.AddEdge(part);
     }
 }
@@ -93,7 +93,7 @@ NfaBuilder::RepeatStates NfaBuilder::MakeRepeatStates(const ast::Node& inner_nod
     result.start_inner_state = last_state_ = result.start_state.AddEpsEdge();
     inner_node.Accept(*this);
     result.end_inner_state = last_state_;
-    result.end_state = result.end_inner_state.AddEpsEdge();
+    last_state_ = result.end_state = result.end_inner_state.AddEpsEdge();
     return result;
 }
 

@@ -16,6 +16,7 @@ const Nfa& NfaWrapper::GetNfa() const {
 
 void NfaWrapper::Clear() {
     nfa_.states_.clear();
+    nfa_.final_states_number_ = 0;
     InitRoot();
 }
 

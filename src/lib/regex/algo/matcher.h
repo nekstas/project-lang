@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <ostream>
 
 namespace lang::regex::algo {
 
@@ -10,6 +11,11 @@ public:
         bool matched = false;
         size_t length = 0;
         size_t final_id = -1;
+
+        bool operator==(const Result& another) const {
+            return std::tie(matched, length, final_id) ==
+                   std::tie(another.matched, another.length, another.final_id);
+        }
     };
 
 public:
