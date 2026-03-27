@@ -23,10 +23,9 @@ StateWrapper StateWrapper::AddEpsEdge() {
 }
 
 size_t StateWrapper::MakeFinal() {
-    ASSERT_NOT_NULL(fa_);
-    auto& real_state = fa_->ExtractState(*this);
-    real_state.final_id_ = fa_->NextFinalId();
-    return real_state.final_id_;
+    size_t final_id = fa_->NextFinalId();
+    SetFinalId(final_id);
+    return final_id;
 }
 
 }  // namespace lang::regex::nfa

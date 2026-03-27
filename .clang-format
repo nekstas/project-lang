@@ -12,3 +12,15 @@ SeparateDefinitionBlocks: Always
 MaxEmptyLinesToKeep: 1
 BreakConstructorInitializers: BeforeComma
 ContinuationIndentWidth: 4
+
+# Возможно, стоит потом включить и разобраться с этим
+#AllowAllArgumentsOnNextLine: true
+#AlignAfterOpenBracket: false
+#AlignOperands: DontAlign
+#BreakBeforeBinaryOperators: NonAssignment
+#BreakAfterOpenBracketFunction: true
+#BreakBeforeCloseBracketFunction: true
+#BreakAfterOpenBracketBracedList: true
+#BreakBeforeCloseBracketBracedList: true
+#BreakAfterOpenBracketIf: true
+#BreakBeforeCloseBracketIf: true

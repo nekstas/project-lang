@@ -22,7 +22,17 @@ public:
     }
 
 public:
-    void AddEdgeTo(Derived another_state, uint8_t code) {
+    size_t GetStateId() const {
+        return state_id_;
+    }
+
+    void SetFinalId(size_t final_id) {
+        ASSERT_NOT_NULL(fa_);
+        auto& real_state = fa_->ExtractState(*static_cast<Derived*>(this));
+        real_state.final_id_ = final_id;
+    }
+
+    void AddEdgeTo(uint8_t code, Derived another_state) {
         ASSERT_NOT_NULL(fa_);
         auto& real_state = fa_->ExtractState(*static_cast<Derived*>(this));
         THROW_IF(real_state.edges_.contains(code), ::errors::LogicError,
@@ -33,7 +43,7 @@ public:
     Derived AddEdge(uint8_t code) {
         ASSERT_NOT_NULL(fa_);
         auto another_state = fa_->CreateState();
-        AddEdgeTo(another_state, code);
+        AddEdgeTo(code, another_state);
         return another_state;
     }
 

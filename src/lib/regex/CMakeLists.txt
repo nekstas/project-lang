@@ -20,7 +20,9 @@ add_library(lib_regex STATIC
     algo/nfa/matcher.cpp
     algo/matcher.cpp
     algo/dfa/builder.cpp
-    algo/dfa/builder.h
+    algo/dfa/matcher.cpp
+    dfa/dfa.cpp
+    errors.cpp
 )
 
 target_link_libraries(lib_regex PRIVATE lib_errors lib_utils)

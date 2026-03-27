@@ -47,6 +47,10 @@ public:
         return fa_.states_[state.state_id_];
     }
 
+    void SetFinalStatesNumber(size_t number) {
+        fa_.final_states_number_ = number;
+    }
+
 protected:
     FaT fa_;
 };

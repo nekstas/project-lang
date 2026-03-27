@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace lang::regex::parser {
 
 // TODO: возможно в будущем стоит расширить здесь информацию,

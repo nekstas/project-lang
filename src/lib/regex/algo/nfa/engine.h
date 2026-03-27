@@ -13,10 +13,17 @@ public:
     explicit Engine(const regex::nfa::Nfa& nfa);
 
 public:
-    size_t GetRootId() const;
+    const regex::nfa::Nfa& GetNfa() const;
+    std::set<size_t> GetRootIds() const;
+
+    std::set<uint8_t> GetEdgeCodes(const std::set<size_t>& state_ids) const;
+
     const std::set<size_t>& EpsClosure(size_t state_id) const;
     std::set<size_t> EpsClosure(const std::set<size_t>& state_ids) const;
+
     std::set<size_t> Move(const std::set<size_t>& state_ids, uint8_t code) const;
+    std::set<size_t> MoveClosure(const std::set<size_t>& state_ids, uint8_t code) const;
+
     size_t GetFinalId(const std::set<size_t>& state_ids) const;
 
 private:

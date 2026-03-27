@@ -1,10 +1,12 @@
 #include <catch2/catch_test_macros.hpp>
-#include <cmath>
 
-#include "../../../src/lib/errors/errors.h"
+#include "../../../src/lib/regex/algo/dfa/builder.h"
+#include "../../../src/lib/regex/algo/dfa/matcher.h"
 #include "../../../src/lib/regex/algo/nfa/matcher.h"
+#include "../../../src/lib/regex/errors.h"
 #include "../../../src/lib/regex/parser/parser.h"
 #include "../../../src/lib/regex/visitors/nfa_builder.h"
+#include "catch2/catch_template_test_macros.hpp"
 
 namespace Catch {  // NOLINT
 
@@ -26,28 +28,40 @@ using Result = lang::regex::algo::Matcher::Result;
 
 class MatcherCreator {
 public:
-    MatcherCreator& Begin() {
+    void Begin() {
         builder_.Clear();
-        return *this;
     }
 
-    MatcherCreator& AddToken(const std::string& regex) {
+    void AddToken(const std::string& regex) {
         const auto ptr = parser_.Parse(regex);
         assert(ptr != nullptr);
         builder_.ExtendFromAst(*ptr);
-        return *this;
     }
 
-    std::unique_ptr<lang::regex::algo::Matcher> End() const {
-        return std::make_unique<lang::regex::algo::nfa::Matcher>(builder_.GetNfa());
-    }
+    template <typename T>
+    std::unique_ptr<lang::regex::algo::Matcher> GetMatcher();
 
 private:
     lang::regex::Parser parser_;
     lang::regex::visitors::NfaBuilder builder_;
 };
 
-TEST_CASE("lang::regex::visitors::NfaBuilder + lang::regex::algo::NfaEngine") {
+template <>
+std::unique_ptr<lang::regex::algo::Matcher>
+MatcherCreator::GetMatcher<lang::regex::algo::nfa::Matcher>() {
+    return std::make_unique<lang::regex::algo::nfa::Matcher>(builder_.GetNfa());
+}
+
+template <>
+std::unique_ptr<lang::regex::algo::Matcher>
+MatcherCreator::GetMatcher<lang::regex::algo::dfa::Matcher>() {
+    lang::regex::algo::dfa::Builder builder{};
+    const auto dfa = builder.Build(builder_.GetNfa());
+    return std::make_unique<lang::regex::algo::dfa::Matcher>(dfa);
+}
+
+TEMPLATE_TEST_CASE("lang::regex::algo::Matcher implementations", "",
+                   lang::regex::algo::nfa::Matcher, lang::regex::algo::dfa::Matcher) {
     MatcherCreator creator;
     auto match = [&creator](const std::initializer_list<std::string> tokens,
                             const std::string& code) {
@@ -55,7 +69,7 @@ TEST_CASE("lang::regex::visitors::NfaBuilder + lang::regex::algo::NfaEngine") {
         for (const auto& token : tokens) {
             creator.AddToken(token);
         }
-        return creator.End()->Match(code);
+        return creator.GetMatcher<TestType>()->Match(code);
     };
 
     SECTION("Basic") {
@@ -99,9 +113,14 @@ TEST_CASE("lang::regex::visitors::NfaBuilder + lang::regex::algo::NfaEngine") {
     }
 
     SECTION("Min final_id") {
-        REQUIRE(match({"a", "a"}, "aaa") == Result{true, 1, 0});
-        REQUIRE(match({"a?", "a"}, "aaa") == Result{true, 1, 0});
-        REQUIRE(match({"a", "a?"}, "aaa") == Result{true, 1, 0});
+        REQUIRE(match({"aa", "a+"}, "abb") == Result{true, 1, 1});
+        REQUIRE(match({"aa", "a+"}, "aab") == Result{true, 2, 0});
+        REQUIRE(match({"(ab)?(cd)?e?", "a?(bc)?(de)?"}, "") == Result{true, 0, 0});
+        REQUIRE(match({"(ab)?(cd)?e?", "a?(bc)?(de)?"}, "a") == Result{true, 1, 1});
+        REQUIRE(match({"(ab)?(cd)?e?", "a?(bc)?(de)?"}, "ab") == Result{true, 2, 0});
+        REQUIRE(match({"(ab)?(cd)?e?", "a?(bc)?(de)?"}, "abc") == Result{true, 3, 1});
+        REQUIRE(match({"(ab)?(cd)?e?", "a?(bc)?(de)?"}, "abcd") == Result{true, 4, 0});
+        REQUIRE(match({"(ab)?(cd)?e?", "a?(bc)?(de)?"}, "abcde") == Result{true, 5, 0});
     }
 
     SECTION("Not only first and last results") {
@@ -134,6 +153,12 @@ TEST_CASE("lang::regex::visitors::NfaBuilder + lang::regex::algo::NfaEngine") {
         REQUIRE(match({"а*ба+"}, "аба") == Result{true, 6, 0});
         REQUIRE(match({"а*ба+"}, "абааа") == Result{true, 10, 0});
         REQUIRE(match({"а*ба+"}, "ааабааа") == Result{true, 14, 0});
+    }
+
+    SECTION("Useless token regexp") {
+        if constexpr (std::is_same_v<TestType, lang::regex::algo::dfa::Matcher>) {
+            REQUIRE_THROWS_AS(match({"a+", "aa"}, "aab"), lang::regex::errors::DfaBuilderError);
+        }
     }
 }
 

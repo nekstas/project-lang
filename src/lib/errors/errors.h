@@ -6,8 +6,8 @@
 #include "../utils/format_stream.h"
 
 #define VA_ARGS(...) , ##__VA_ARGS__
-#define THROW(error_class, format_expr, ...)                            \
-    throw error_class(::utils::FormatStream() << format_expr, __FILE__, \
+#define THROW(error_class, format_expr, ...)                                          \
+    throw error_class(::utils::FormatStream() << format_expr, #error_class, __FILE__, \
                       __LINE__ VA_ARGS(__VA_ARGS__))
 #define THROW_IF(condition, error_class, format_expr, ...) \
     if (condition) {                                       \
@@ -22,7 +22,8 @@ namespace errors {
 
 class RuntimeError : public std::runtime_error {
 public:
-    RuntimeError(const std::string& message, const std::string& file, size_t line);
+    RuntimeError(const std::string& message, const std::string& error_cls_name,
+                 const std::string& file, size_t line);
 };
 
 class LogicError : public RuntimeError {

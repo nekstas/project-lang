@@ -5,6 +5,7 @@ namespace lang::regex {
 namespace errors {
 
 class ParserError;
+class DfaBuilderError;
 
 }  // namespace errors
 
@@ -71,7 +72,6 @@ class Matcher;
 namespace dfa {
 
 class Builder;
-class Engine;
 class Matcher;
 
 }  // namespace dfa

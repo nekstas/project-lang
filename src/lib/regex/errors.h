@@ -7,26 +7,18 @@ namespace lang::regex::errors {
 
 class ParserError : public ::errors::RuntimeError {
 public:
-    ParserError(const std::string& message, const std::string& file, const size_t line,
-                const lang::regex::parser::ErrorState& error_state)
-        : error_state_(error_state)
-        , RuntimeError(utils::FormatStream{} << ConstructMessageFromErrorState() << "\n"
-                                             << message,
-                       file, line) {}
+    ParserError(const std::string& message, const std::string& error_cls_name,
+                const std::string& file, size_t line, const parser::ErrorState& error_state);
 
-    std::string ConstructMessageFromErrorState() const {
-        utils::FormatStream builder;
-        builder << "[*] At pos " << error_state_.GetPos() << " got ";
-        if (error_state_.IsEof()) {
-            builder << "EOF.";
-        } else {
-            builder << "'" << error_state_.GetChar() << "'";
-        }
-        return builder;
-    }
+    static std::string ConstructMessageFromErrorState(const parser::ErrorState& error_state);
 
 private:
-    lang::regex::parser::ErrorState error_state_;
+    parser::ErrorState error_state_;
+};
+
+class DfaBuilderError : public ::errors::RuntimeError {
+public:
+    using RuntimeError::RuntimeError;
 };
 
 }  // namespace lang::regex::errors

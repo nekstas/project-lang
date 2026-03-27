@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <set>
 #include <unordered_map>
 
 namespace lang::regex::fa {
@@ -11,6 +12,7 @@ class State {
 
 public:
     size_t GetEdge(uint8_t code) const;
+    std::set<uint8_t> GetEdgeCodes() const;
     size_t GetFinalId() const;
 
 protected:

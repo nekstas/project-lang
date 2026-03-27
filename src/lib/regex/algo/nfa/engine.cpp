@@ -8,8 +8,12 @@ Engine::Engine(const regex::nfa::Nfa& nfa) : nfa_(nfa), eps_closures_(nfa_.Size(
     Build();
 }
 
-size_t Engine::GetRootId() const {
-    return nfa_.GetRootId();
+const regex::nfa::Nfa& Engine::GetNfa() const {
+    return nfa_;
+}
+
+std::set<size_t> Engine::GetRootIds() const {
+    return EpsClosure(nfa_.GetRootId());
 }
 
 const std::set<size_t>& Engine::EpsClosure(size_t state_id) const {
@@ -24,6 +28,15 @@ std::set<size_t> Engine::EpsClosure(const std::set<size_t>& state_ids) const {
     return result;
 }
 
+std::set<uint8_t> Engine::GetEdgeCodes(const std::set<size_t>& state_ids) const {
+    std::set<uint8_t> result;
+    for (size_t state_id : state_ids) {
+        const auto codes = nfa_.GetState(state_id).GetEdgeCodes();
+        result.insert(codes.begin(), codes.end());
+    }
+    return result;
+}
+
 std::set<size_t> Engine::Move(const std::set<size_t>& state_ids, uint8_t code) const {
     std::set<size_t> result;
     for (size_t state_id : state_ids) {
@@ -33,6 +46,10 @@ std::set<size_t> Engine::Move(const std::set<size_t>& state_ids, uint8_t code) c
         }
     }
     return result;
+}
+
+std::set<size_t> Engine::MoveClosure(const std::set<size_t>& state_ids, uint8_t code) const {
+    return EpsClosure(Move(state_ids, code));
 }
 
 size_t Engine::GetFinalId(const std::set<size_t>& state_ids) const {
