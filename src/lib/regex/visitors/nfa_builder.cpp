@@ -9,7 +9,7 @@ namespace lang::regex::visitors {
 NfaBuilder::NfaBuilder() : last_state_(nfa_.GetRoot()) {}
 
 nfa::Nfa NfaBuilder::GetNfa() const {
-    return nfa_.GetNfa();
+    return nfa_.GetFa();
 }
 
 size_t NfaBuilder::ExtendFromAst(const ast::Node& node) {

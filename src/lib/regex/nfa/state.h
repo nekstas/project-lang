@@ -1,23 +1,19 @@
 #pragma once
 
-#include <unordered_map>
 #include <unordered_set>
-#include <cstdint>
+
+#include "../fa/state.h"
 
 namespace lang::regex::nfa {
 
-class State {
+class State : public fa::State {
     friend class StateWrapper;
 
 public:
     const std::unordered_set<size_t>& GetEpsEdges() const;
-    size_t GetEdge(uint8_t code) const;
-    size_t GetFinalId() const;
 
-private:
-    std::unordered_map<uint8_t, size_t> edges_;
+protected:
     std::unordered_set<size_t> eps_edges_;
-    size_t final_id_ = -1;
 };
 
 }  // namespace lang::regex::nfa

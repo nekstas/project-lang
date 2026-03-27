@@ -20,12 +20,33 @@ class RepeatNode;
 
 }  // namespace ast
 
+namespace fa {
+
+class State;
+template <typename Derived, typename FaWrapperT>
+class StateWrapper;
+template <typename StateT>
+class Fa;
+template <typename Derived, typename StateT, typename FaT, typename StateWrapperT>
+class FaWrapper;
+
+}  // namespace fa
+
+namespace dfa {
+
+class State;
+class StateWrapper;
+class Dfa;
+class DfaWrapper;
+
+}  // namespace dfa
+
 namespace nfa {
 
 class State;
 class StateWrapper;
-class NfaWrapper;
 class Nfa;
+class NfaWrapper;
 
 }  // namespace nfa
 
@@ -46,6 +67,14 @@ class Engine;
 class Matcher;
 
 }  // namespace nfa
+
+namespace dfa {
+
+class Builder;
+class Engine;
+class Matcher;
+
+}  // namespace dfa
 
 class Matcher;
 

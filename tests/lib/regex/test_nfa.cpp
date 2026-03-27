@@ -134,6 +134,7 @@ TEST_CASE("lang::regex::visitors::NfaBuilder + lang::regex::algo::NfaEngine") {
         REQUIRE(match({"а*ба+"}, "аба") == Result{true, 6, 0});
         REQUIRE(match({"а*ба+"}, "абааа") == Result{true, 10, 0});
         REQUIRE(match({"а*ба+"}, "ааабааа") == Result{true, 14, 0});
-    }}
+    }
+}
 
 }  // namespace

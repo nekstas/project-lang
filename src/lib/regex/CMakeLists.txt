@@ -8,6 +8,10 @@ add_library(lib_regex STATIC
     utils/utils.cpp
     utils/utils.h
     visitors/nfa_builder.cpp
+    fa/state.cpp
+    fa/state_wrapper.hpp
+    fa/fa.hpp
+    fa/fa_wrapper.hpp
     nfa/state.cpp
     nfa/nfa.cpp
     nfa/state_wrapper.cpp
@@ -15,6 +19,8 @@ add_library(lib_regex STATIC
     algo/nfa/engine.cpp
     algo/nfa/matcher.cpp
     algo/matcher.cpp
+    algo/dfa/builder.cpp
+    algo/dfa/builder.h
 )
 
 target_link_libraries(lib_regex PRIVATE lib_errors lib_utils)
