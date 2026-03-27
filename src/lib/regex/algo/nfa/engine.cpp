@@ -4,8 +4,12 @@
 
 namespace lang::regex::algo::nfa {
 
-Engine::Engine(const lang::regex::nfa::Nfa& nfa) : nfa_(nfa), eps_closures_(nfa_.Size()) {
+Engine::Engine(const regex::nfa::Nfa& nfa) : nfa_(nfa), eps_closures_(nfa_.Size()) {
     Build();
+}
+
+size_t Engine::GetRootId() const {
+    return nfa_.GetRootId();
 }
 
 const std::set<size_t>& Engine::EpsClosure(size_t state_id) const {
@@ -29,6 +33,14 @@ std::set<size_t> Engine::Move(const std::set<size_t>& state_ids, uint8_t code) c
         }
     }
     return result;
+}
+
+size_t Engine::GetFinalId(const std::set<size_t>& state_ids) const {
+    size_t final_id = -1;
+    for (size_t state_id : state_ids) {
+        final_id = std::min(final_id, nfa_.GetState(state_id).GetFinalId());
+    }
+    return final_id;
 }
 
 void Engine::Build() {

@@ -10,3 +10,7 @@ size_t lang::regex::nfa::State::GetEdge(uint8_t code) const {
     }
     return -1;
 }
+
+size_t lang::regex::nfa::State::GetFinalId() const {
+    return final_id_;
+}

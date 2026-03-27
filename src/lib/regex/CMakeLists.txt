@@ -14,6 +14,7 @@ add_library(lib_regex STATIC
     nfa/nfa_wrapper.cpp
     algo/nfa/engine.cpp
     algo/nfa/matcher.cpp
+    algo/matcher.cpp
 )
 
 target_link_libraries(lib_regex PRIVATE lib_errors lib_utils)

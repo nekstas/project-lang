@@ -16,6 +16,7 @@ public:
     size_t Size() const;
     size_t GetFinalStatesNumber() const;
     const State& GetState(size_t state_id) const;
+    static size_t GetRootId();
 
 private:
     std::vector<State> states_;

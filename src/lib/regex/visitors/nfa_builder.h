@@ -10,36 +10,36 @@ namespace lang::regex::visitors {
 class NfaBuilder : public Visitor {
 private:
     struct RepeatStates {
-        lang::regex::nfa::StateWrapper start_state;
-        lang::regex::nfa::StateWrapper start_inner_state;
-        lang::regex::nfa::StateWrapper end_inner_state;
-        lang::regex::nfa::StateWrapper end_state;
+        nfa::StateWrapper start_state;
+        nfa::StateWrapper start_inner_state;
+        nfa::StateWrapper end_inner_state;
+        nfa::StateWrapper end_state;
     };
 
 public:
     NfaBuilder();
 
-    lang::regex::nfa::Nfa GetNfa() const;
-    size_t ExtendFromAst(const lang::regex::ast::Node& node);
+    nfa::Nfa GetNfa() const;
+    size_t ExtendFromAst(const ast::Node& node);
     void Clear();
 
-    void Visit(const lang::regex::ast::CharNode& node) override;
-    void Visit(const lang::regex::ast::WideCharNode& node) override;
-    void Visit(const lang::regex::ast::ChoiceNode& node) override;
-    void Visit(const lang::regex::ast::RepeatNode& node) override;
-    void Visit(const lang::regex::ast::SequenceNode& node) override;
+    void Visit(const ast::CharNode& node) override;
+    void Visit(const ast::WideCharNode& node) override;
+    void Visit(const ast::ChoiceNode& node) override;
+    void Visit(const ast::RepeatNode& node) override;
+    void Visit(const ast::SequenceNode& node) override;
 
 private:
-    void VisitZeroOrMoreRepeatNode(const lang::regex::ast::Node& inner_node);
-    void VisitOneOrMoreRepeatNode(const lang::regex::ast::Node& inner_node);
-    void VisitZeroOrOneRepeatNode(const lang::regex::ast::Node& inner_node);
+    void VisitZeroOrMoreRepeatNode(const ast::Node& inner_node);
+    void VisitOneOrMoreRepeatNode(const ast::Node& inner_node);
+    void VisitZeroOrOneRepeatNode(const ast::Node& inner_node);
 
 private:
-    RepeatStates MakeRepeatStates(const lang::regex::ast::Node& inner_node);
+    RepeatStates MakeRepeatStates(const ast::Node& inner_node);
 
 private:
-    lang::regex::nfa::NfaWrapper nfa_;
-    lang::regex::nfa::StateWrapper last_state_;
+    nfa::NfaWrapper nfa_;
+    nfa::StateWrapper last_state_;
 };
 
 }  // namespace lang::regex::visitors

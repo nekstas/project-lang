@@ -12,6 +12,7 @@ class State {
 public:
     const std::unordered_set<size_t>& GetEpsEdges() const;
     size_t GetEdge(uint8_t code) const;
+    size_t GetFinalId() const;
 
 private:
     std::unordered_map<uint8_t, size_t> edges_;

@@ -17,4 +17,8 @@ const State& Nfa::GetState(size_t state_id) const {
     return states_[state_id];
 }
 
+size_t Nfa::GetRootId() {
+    return 0;
+}
+
 }  // namespace lang::regex::nfa

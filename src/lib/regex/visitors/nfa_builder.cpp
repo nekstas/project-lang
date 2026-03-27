@@ -6,14 +6,14 @@
 
 namespace lang::regex::visitors {
 
-NfaBuilder::NfaBuilder() : nfa_(), last_state_(nfa_.GetRoot()) {}
+NfaBuilder::NfaBuilder() : last_state_(nfa_.GetRoot()) {}
 
-lang::regex::nfa::Nfa NfaBuilder::GetNfa() const {
+nfa::Nfa NfaBuilder::GetNfa() const {
     return nfa_.GetNfa();
 }
 
-size_t NfaBuilder::ExtendFromAst(const lang::regex::ast::Node& node) {
-    last_state_ = nfa_.GetRoot();
+size_t NfaBuilder::ExtendFromAst(const ast::Node& node) {
+    last_state_ = nfa_.GetRoot().AddEpsEdge();
     node.Accept(*this);
     return last_state_.MakeFinal();
 }
@@ -23,20 +23,20 @@ void NfaBuilder::Clear() {
     last_state_ = nfa_.GetRoot();
 }
 
-void NfaBuilder::Visit(const lang::regex::ast::CharNode& node) {
+void NfaBuilder::Visit(const ast::CharNode& node) {
     last_state_ = last_state_.AddEdge(node.GetCode());
 }
 
-void NfaBuilder::Visit(const lang::regex::ast::WideCharNode& node) {
+void NfaBuilder::Visit(const ast::WideCharNode& node) {
     for (uint8_t part : node.GetWideChar()) {
         last_state_ = last_state_.AddEdge(part);
     }
 }
 
-void NfaBuilder::Visit(const lang::regex::ast::ChoiceNode& node) {
+void NfaBuilder::Visit(const ast::ChoiceNode& node) {
     auto start_state = last_state_;
 
-    std::vector<lang::regex::nfa::StateWrapper> last_states;
+    std::vector<nfa::StateWrapper> last_states;
     for (const auto& alt_node : node.GetNodes()) {
         last_state_ = start_state.AddEpsEdge();
         alt_node->Accept(*this);
@@ -49,7 +49,7 @@ void NfaBuilder::Visit(const lang::regex::ast::ChoiceNode& node) {
     }
 }
 
-void NfaBuilder::Visit(const lang::regex::ast::RepeatNode& node) {
+void NfaBuilder::Visit(const ast::RepeatNode& node) {
     switch (node.GetRepeatType()) {
         case ast::RepeatType::ZERO_OR_MORE:
             VisitZeroOrMoreRepeatNode(node.GetNode());
@@ -65,7 +65,7 @@ void NfaBuilder::Visit(const lang::regex::ast::RepeatNode& node) {
     }
 }
 
-void NfaBuilder::Visit(const lang::regex::ast::SequenceNode& node) {
+void NfaBuilder::Visit(const ast::SequenceNode& node) {
     for (const auto& another_node : node.GetNodes()) {
         another_node->Accept(*this);
     }
@@ -88,7 +88,7 @@ void NfaBuilder::VisitZeroOrOneRepeatNode(const ast::Node& inner_node) {
 }
 
 NfaBuilder::RepeatStates NfaBuilder::MakeRepeatStates(const ast::Node& inner_node) {
-    NfaBuilder::RepeatStates result;
+    RepeatStates result;
     result.start_state = last_state_;
     result.start_inner_state = last_state_ = result.start_state.AddEpsEdge();
     inner_node.Accept(*this);
