@@ -2,6 +2,7 @@
 
 #include <string>
 #include <ostream>
+#include <tuple>
 
 namespace lang::regex::algo {
 

@@ -34,6 +34,8 @@ public:
 
     void AddEdgeTo(uint8_t code, Derived another_state) {
         ASSERT_NOT_NULL(fa_);
+        THROW_IF(fa_ != another_state.fa_, ::errors::LogicError,
+                 "Trying to work with state from different fa.");
         auto& real_state = fa_->ExtractState(*static_cast<Derived*>(this));
         THROW_IF(real_state.edges_.contains(code), ::errors::LogicError,
                  "Current NFA implementation support only one edge for char code.");

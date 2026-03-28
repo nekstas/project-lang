@@ -40,7 +40,7 @@ public:
 
     StateT& ExtractState(StateWrapperT state) {
         THROW_IF(state.fa_ != this, ::errors::LogicError,
-                 "Trying to extract state from different data.");
+                 "Trying to extract state from different fa.");
         THROW_IF(state.state_id_ >= fa_.Size(), ::errors::LogicError,
                  "Trying to extract state with index (" << state.state_id_ << ") while there are "
                                                         << fa_.Size() << " states.");
