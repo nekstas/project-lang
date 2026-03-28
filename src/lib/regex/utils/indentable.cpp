@@ -3,7 +3,7 @@
 #include <cassert>
 #include <iostream>
 
-namespace lang::regex::utils {
+namespace lib::regex::utils {
 
 namespace {
 constexpr std::string kNewLine = "\n";
@@ -47,4 +47,4 @@ LinePrinter::~LinePrinter() {
     }
 }
 
-}  // namespace lang::regex::utils
+}  // namespace lib::regex::utils

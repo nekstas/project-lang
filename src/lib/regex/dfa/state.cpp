@@ -1,3 +1,3 @@
 #include "state.h"
 
-namespace lang::regex::dfa {}
+namespace lib::regex::dfa {}

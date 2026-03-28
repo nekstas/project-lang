@@ -1,9 +1,8 @@
 #pragma once
 
-#include <cstdint>
 #include <string>
 
-namespace lang::regex::utils {
+namespace lib::regex::utils {
 
 class Indentable;
 
@@ -43,7 +42,7 @@ private:
 
 class Indentable {
 public:
-    friend class utils::WithIndent;
+    friend class WithIndent;
 
 public:
     explicit Indentable(size_t indent_spaces, bool use_newlines = true);
@@ -61,4 +60,4 @@ private:
     bool use_newlines_;
 };
 
-}  // namespace lang::regex::utils
+}  // namespace lib::regex::utils

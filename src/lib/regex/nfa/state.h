@@ -4,7 +4,7 @@
 
 #include "../fa/state.h"
 
-namespace lang::regex::nfa {
+namespace lib::regex::nfa {
 
 class State : public fa::State {
     friend class StateWrapper;
@@ -16,4 +16,4 @@ protected:
     std::unordered_set<size_t> eps_edges_;
 };
 
-}  // namespace lang::regex::nfa
+}  // namespace lib::regex::nfa

@@ -4,20 +4,20 @@
 
 #include "visitor.h"
 
-namespace lang::regex::visitors {
+namespace lib::regex::visitors {
 
 class Formatter : public Visitor {
 public:
-    std::string ToString(const lang::regex::ast::Node* node);
+    std::string ToString(const ast::Node* node);
 
-    void Visit(const lang::regex::ast::CharNode& node) override;
-    void Visit(const lang::regex::ast::WideCharNode& node) override;
-    void Visit(const lang::regex::ast::ChoiceNode& node) override;
-    void Visit(const lang::regex::ast::RepeatNode& node) override;
-    void Visit(const lang::regex::ast::SequenceNode& node) override;
+    void Visit(const ast::CharNode& node) override;
+    void Visit(const ast::WideCharNode& node) override;
+    void Visit(const ast::ChoiceNode& node) override;
+    void Visit(const ast::RepeatNode& node) override;
+    void Visit(const ast::SequenceNode& node) override;
 
 private:
     std::stringstream out_;
 };
 
-}  // namespace lang::regex::visitors
+}  // namespace lib::regex::visitors

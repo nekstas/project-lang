@@ -6,7 +6,7 @@
 #include "../ast/node.h"
 #include "parser_base.h"
 
-namespace lang::regex {
+namespace lib::regex {
 
 class Parser : public parser::Base {
 public:
@@ -22,4 +22,4 @@ private:
     std::unique_ptr<ast::Node> ParseWideChar(size_t char_length);
 };
 
-}  // namespace lang::regex
+}  // namespace lib::regex

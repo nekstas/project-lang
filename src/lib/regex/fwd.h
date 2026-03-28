@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lang::regex {
+namespace lib::regex {
 
 namespace errors {
 
@@ -82,4 +82,4 @@ class Matcher;
 
 class Parser;
 
-}  // namespace lang::regex
+}  // namespace lib::regex

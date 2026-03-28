@@ -3,7 +3,7 @@
 #include "../fa/fa_wrapper.hpp"
 #include "nfa.h"
 
-namespace lang::regex::nfa {
+namespace lib::regex::nfa {
 
 class NfaWrapper : public fa::FaWrapper<NfaWrapper, State, Nfa, StateWrapper> {
 public:
@@ -15,4 +15,4 @@ public:
     size_t NextFinalId();
 };
 
-}  // namespace lang::regex::nfa
+}  // namespace lib::regex::nfa

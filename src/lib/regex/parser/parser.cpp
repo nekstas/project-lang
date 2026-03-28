@@ -4,7 +4,7 @@
 #include "../ast/all.h"
 #include "../utils/utils.h"
 
-namespace lang::regex {
+namespace lib::regex {
 
 namespace {
 
@@ -80,7 +80,7 @@ std::unique_ptr<ast::Node> Parser::ParseChoice() {
 }
 
 std::unique_ptr<ast::Node> Parser::ParseChar() {
-    const auto char_length = utils::GetUtf8CharLength(Peek());
+    auto char_length = utils::GetUtf8CharLength(Peek());
     switch (char_length) {
         case 0:
             THROW_REGEX_PARSER_ERROR("Got invalid utf8 sequence (starts from 0b10... byte).");
@@ -111,6 +111,8 @@ std::unique_ptr<ast::Node> Parser::ParseSingleChar() {
                 case 't':
                     ch = '\t';
                     break;
+                default:
+                    break;
             }
             break;
         case '*':
@@ -122,6 +124,8 @@ std::unique_ptr<ast::Node> Parser::ParseSingleChar() {
         case ')':
         case '|':
             UNREACHABLE;
+        default:
+            break;
     }
     return std::make_unique<ast::CharNode>(ch);
 }
@@ -135,4 +139,4 @@ std::unique_ptr<ast::Node> Parser::ParseWideChar(size_t char_length) {
     return std::make_unique<ast::WideCharNode>(wide_char);
 }
 
-}  // namespace lang::regex
+}  // namespace lib::regex

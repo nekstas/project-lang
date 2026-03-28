@@ -4,7 +4,7 @@
 #include "nfa.h"
 #include "state_wrapper.h"
 
-namespace lang::regex::nfa {
+namespace lib::regex::nfa {
 
 NfaWrapper::NfaWrapper() {
     InitRoot();
@@ -25,4 +25,4 @@ size_t NfaWrapper::NextFinalId() {
     return fa_.final_states_number_++;
 }
 
-}  // namespace lang::regex::nfa
+}  // namespace lib::regex::nfa

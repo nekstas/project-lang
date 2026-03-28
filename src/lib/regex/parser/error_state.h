@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace lang::regex::parser {
+namespace lib::regex::parser {
 
 // TODO: возможно в будущем стоит расширить здесь информацию,
 //  добавить поддержку UTF-8, контекст и подобное...
@@ -29,4 +29,4 @@ private:
     bool is_eof_;
 };
 
-}  // namespace lang::regex::parser
+}  // namespace lib::regex::parser

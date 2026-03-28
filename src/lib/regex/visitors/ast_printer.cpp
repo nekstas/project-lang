@@ -4,7 +4,7 @@
 #include "../ast/all.h"
 #include "../utils/utils.h"
 
-namespace lang::regex {
+namespace lib::regex {
 
 namespace {
 
@@ -37,7 +37,7 @@ void visitors::AstPrinter::Visit(const ast::WideCharNode &node) {
     Line(out_) << "[\"" << node.GetWideChar() << "\"]";
 }
 
-void visitors::AstPrinter::ProcessNodesBaseNode(const lang::regex::ast::NodesBaseNode &node) {
+void visitors::AstPrinter::ProcessNodesBaseNode(const ast::NodesBaseNode &node) {
     utils::WithIndent with_indent(*this);
     for (const auto &item : node.GetNodes()) {
         item->Accept(*this);
@@ -66,4 +66,4 @@ void visitors::AstPrinter::Visit(const ast::RepeatNode &node) {
     Line(out_) << "[/repeat]";
 }
 
-}  // namespace lang::regex
+}  // namespace lib::regex

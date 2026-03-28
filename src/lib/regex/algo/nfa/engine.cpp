@@ -2,7 +2,7 @@
 
 #include <queue>
 
-namespace lang::regex::algo::nfa {
+namespace lib::regex::algo::nfa {
 
 Engine::Engine(const regex::nfa::Nfa& nfa) : nfa_(nfa), eps_closures_(nfa_.Size()) {
     Build();
@@ -91,4 +91,4 @@ void Engine::BuildForState(size_t state_id) {
     }
 }
 
-}  // namespace lang::regex::algo::nfa
+}  // namespace lib::regex::algo::nfa

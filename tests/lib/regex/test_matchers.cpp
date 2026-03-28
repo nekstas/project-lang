@@ -11,8 +11,8 @@
 namespace Catch {  // NOLINT
 
 template <>
-struct StringMaker<lang::regex::algo::Matcher::Result> {
-    static std::string convert(lang::regex::algo::Matcher::Result const& result) {  // NOLINT
+struct StringMaker<lib::regex::algo::Matcher::Result> {
+    static std::string convert(lib::regex::algo::Matcher::Result const& result) {  // NOLINT
         if (!result.matched) {
             return utils::FormatStream{} << "Result{matched=false}";
         }
@@ -24,7 +24,7 @@ struct StringMaker<lang::regex::algo::Matcher::Result> {
 
 namespace {
 
-using Result = lang::regex::algo::Matcher::Result;
+using Result = lib::regex::algo::Matcher::Result;
 
 class MatcherCreator {
 public:
@@ -39,29 +39,29 @@ public:
     }
 
     template <typename T>
-    std::unique_ptr<lang::regex::algo::Matcher> GetMatcher();
+    std::unique_ptr<lib::regex::algo::Matcher> GetMatcher();
 
 private:
-    lang::regex::Parser parser_;
-    lang::regex::visitors::NfaBuilder builder_;
+    lib::regex::Parser parser_;
+    lib::regex::visitors::NfaBuilder builder_;
 };
 
 template <>
-std::unique_ptr<lang::regex::algo::Matcher>
-MatcherCreator::GetMatcher<lang::regex::algo::nfa::Matcher>() {
-    return std::make_unique<lang::regex::algo::nfa::Matcher>(builder_.GetNfa());
+std::unique_ptr<lib::regex::algo::Matcher>
+MatcherCreator::GetMatcher<lib::regex::algo::nfa::Matcher>() {
+    return std::make_unique<lib::regex::algo::nfa::Matcher>(builder_.GetNfa());
 }
 
 template <>
-std::unique_ptr<lang::regex::algo::Matcher>
-MatcherCreator::GetMatcher<lang::regex::algo::dfa::Matcher>() {
-    lang::regex::algo::dfa::Builder builder{};
+std::unique_ptr<lib::regex::algo::Matcher>
+MatcherCreator::GetMatcher<lib::regex::algo::dfa::Matcher>() {
+    lib::regex::algo::dfa::Builder builder{};
     const auto dfa = builder.Build(builder_.GetNfa());
-    return std::make_unique<lang::regex::algo::dfa::Matcher>(dfa);
+    return std::make_unique<lib::regex::algo::dfa::Matcher>(dfa);
 }
 
-TEMPLATE_TEST_CASE("lang::regex::algo::Matcher implementations", "",
-                   lang::regex::algo::nfa::Matcher, lang::regex::algo::dfa::Matcher) {
+TEMPLATE_TEST_CASE("lib::regex::algo::Matcher implementations", "",
+                   lib::regex::algo::nfa::Matcher, lib::regex::algo::dfa::Matcher) {
     MatcherCreator creator;
     auto match = [&creator](const std::initializer_list<std::string> tokens,
                             const std::string& code) {
@@ -156,8 +156,8 @@ TEMPLATE_TEST_CASE("lang::regex::algo::Matcher implementations", "",
     }
 
     SECTION("Useless token regexp") {
-        if constexpr (std::is_same_v<TestType, lang::regex::algo::dfa::Matcher>) {
-            REQUIRE_THROWS_AS(match({"a+", "aa"}, "aab"), lang::regex::errors::DfaBuilderError);
+        if constexpr (std::is_same_v<TestType, lib::regex::algo::dfa::Matcher>) {
+            REQUIRE_THROWS_AS(match({"a+", "aa"}, "aab"), lib::regex::errors::DfaBuilderError);
         }
     }
 }

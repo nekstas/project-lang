@@ -8,10 +8,10 @@
 #include "error_state.h"
 
 #define THROW_REGEX_PARSER_ERROR_IF(condition, format_expr) \
-    THROW_IF(condition, lang::regex::errors::ParserError, format_expr, GetErrorState())
+    THROW_IF(condition, lib::regex::errors::ParserError, format_expr, GetErrorState())
 #define THROW_REGEX_PARSER_ERROR(format_expr) THROW_REGEX_PARSER_ERROR_IF(true, format_expr)
 
-namespace lang::regex::parser {
+namespace lib::regex::parser {
 
 class Base {
 
@@ -23,10 +23,6 @@ protected:
 
     bool IsEof() const {
         return pos_ >= code_.size();
-    }
-
-    size_t GetPos() const {  // TODO: Deprecated
-        return pos_;
     }
 
     ErrorState GetErrorState() const {
@@ -88,4 +84,4 @@ private:
     size_t pos_ = 0;
 };
 
-}  // namespace lang::regex::parser
+}  // namespace lib::regex::parser

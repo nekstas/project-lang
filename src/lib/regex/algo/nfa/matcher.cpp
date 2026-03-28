@@ -1,6 +1,6 @@
 #include "matcher.h"
 
-namespace lang::regex::algo::nfa {
+namespace lib::regex::algo::nfa {
 
 Matcher::Matcher(const regex::nfa::Nfa& nfa) : engine_(nfa) {}
 
@@ -16,4 +16,4 @@ Matcher::Result Matcher::Match(const std::string& code) {
     return result;
 }
 
-}  // namespace lang::regex::algo::nfa
+}  // namespace lib::regex::algo::nfa

@@ -4,7 +4,7 @@
 
 #include "fa.hpp"
 
-namespace lang::regex::fa {
+namespace lib::regex::fa {
 
 template <typename Derived, typename FaWrapperT>
 class StateWrapper {
@@ -54,4 +54,4 @@ protected:
     FaWrapperT* fa_ = nullptr;
 };
 
-}  // namespace lang::regex::fa
+}  // namespace lib::regex::fa

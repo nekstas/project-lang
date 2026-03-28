@@ -3,7 +3,7 @@
 #include "../../errors/errors.h"
 #include "../../utils/utils.h"
 
-namespace lang::regex::utils {
+namespace lib::regex::utils {
 
 std::string GetSpecialCharRepr(uint8_t code) {
     switch (code) {
@@ -41,4 +41,4 @@ size_t GetUtf8CharLength(uint8_t first_byte) {
     return -1;
 }
 
-}  // namespace lang::regex::utils
+}  // namespace lib::regex::utils

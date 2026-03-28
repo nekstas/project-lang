@@ -2,7 +2,7 @@
 
 #include "../../dfa/dfa.h"
 
-namespace lang::regex::algo::dfa {
+namespace lib::regex::algo::dfa {
 
 Matcher::Matcher(const regex::dfa::Dfa& dfa) : dfa_(dfa) {}
 
@@ -20,4 +20,4 @@ Matcher::Result Matcher::Match(const std::string& code) {
     return result;
 }
 
-}  // namespace lang::regex::algo::dfa
+}  // namespace lib::regex::algo::dfa

@@ -3,7 +3,7 @@
 #include "../errors/errors.h"
 #include "parser/error_state.h"
 
-namespace lang::regex::errors {
+namespace lib::regex::errors {
 
 class ParserError : public ::errors::RuntimeError {
 public:
@@ -21,4 +21,4 @@ public:
     using RuntimeError::RuntimeError;
 };
 
-}  // namespace lang::regex::errors
+}  // namespace lib::regex::errors

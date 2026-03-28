@@ -2,14 +2,14 @@
 
 #include "../fwd.h"
 
-namespace lang::regex::ast {
+namespace lib::regex::ast {
 
 class Node {
 public:
     virtual ~Node() {}
 
     virtual bool Equals(const Node* another_node) const = 0;
-    virtual void Accept(lang::regex::visitors::Visitor& visitor) const = 0;
+    virtual void Accept(visitors::Visitor& visitor) const = 0;
 };
 
 template <typename T>
@@ -22,4 +22,4 @@ T* CastNode(Node* node) {
     return dynamic_cast<T*>(node);
 }
 
-}  // namespace lang::regex::ast
+}  // namespace lib::regex::ast

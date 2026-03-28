@@ -5,7 +5,7 @@
 #include "../../errors/errors.h"
 #include "../fwd.h"
 
-namespace lang::regex::fa {
+namespace lib::regex::fa {
 
 template <typename StateT>
 class Fa {
@@ -36,4 +36,4 @@ protected:
     size_t final_states_number_ = 0;
 };
 
-}  // namespace lang::regex::fa
+}  // namespace lib::regex::fa

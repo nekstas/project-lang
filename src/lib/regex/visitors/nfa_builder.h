@@ -5,7 +5,7 @@
 #include "../nfa/state_wrapper.h"
 #include "visitor.h"
 
-namespace lang::regex::visitors {
+namespace lib::regex::visitors {
 
 class NfaBuilder : public Visitor {
 private:
@@ -42,4 +42,4 @@ private:
     nfa::StateWrapper last_state_;
 };
 
-}  // namespace lang::regex::visitors
+}  // namespace lib::regex::visitors

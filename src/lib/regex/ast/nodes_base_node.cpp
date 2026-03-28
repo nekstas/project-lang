@@ -4,7 +4,7 @@
 
 #include "../../errors/errors.h"
 
-namespace lang::regex::ast {
+namespace lib::regex::ast {
 
 namespace {
 
@@ -34,7 +34,7 @@ bool NodesBaseNode::Equals(const Node* another_node) const {
     return nodes_base_node && NodesEqual(GetNodes(), nodes_base_node->GetNodes());
 }
 
-void NodesBaseNode::EnsureInvariants() {
+void NodesBaseNode::EnsureInvariants() const {
     THROW_IF(nodes_.size() <= 1, ::errors::LogicError,
              "Nodes list should contain at least two nodes.");
     for (size_t i = 0; i < nodes_.size(); ++i) {
@@ -42,4 +42,4 @@ void NodesBaseNode::EnsureInvariants() {
     }
 }
 
-}  // namespace lang::regex::ast
+}  // namespace lib::regex::ast

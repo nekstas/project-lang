@@ -5,7 +5,7 @@
 #include "../visitors/visitor.h"
 #include "node.h"
 
-namespace lang::regex::ast {
+namespace lib::regex::ast {
 
 class CharNode : public Node {
 public:
@@ -16,7 +16,7 @@ public:
         return char_node && GetCode() == char_node->GetCode();
     }
 
-    void Accept(lang::regex::visitors::Visitor& visitor) const override {
+    void Accept(visitors::Visitor& visitor) const override {
         visitor.Visit(*this);
     }
 
@@ -28,4 +28,4 @@ private:
     uint8_t code_;
 };
 
-}  // namespace lang::regex::ast
+}  // namespace lib::regex::ast

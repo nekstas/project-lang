@@ -6,7 +6,7 @@
 
 #include "../../nfa/nfa.h"
 
-namespace lang::regex::algo::nfa {
+namespace lib::regex::algo::nfa {
 
 class Engine {
 public:
@@ -35,4 +35,4 @@ private:
     std::vector<std::set<size_t>> eps_closures_;
 };
 
-}  // namespace lang::regex::algo::nfa
+}  // namespace lib::regex::algo::nfa

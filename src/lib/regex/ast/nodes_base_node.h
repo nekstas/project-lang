@@ -3,10 +3,9 @@
 #include <memory>
 #include <vector>
 
-#include "../visitors/visitor.h"
 #include "node.h"
 
-namespace lang::regex::ast {
+namespace lib::regex::ast {
 
 class NodesBaseNode : public Node {
 public:
@@ -23,10 +22,10 @@ public:
     }
 
 private:
-    void EnsureInvariants();
+    void EnsureInvariants() const;
 
 protected:
     std::vector<std::unique_ptr<Node>> nodes_;
 };
 
-}  // namespace lang::regex::ast
+}  // namespace lib::regex::ast

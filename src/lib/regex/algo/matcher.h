@@ -4,7 +4,7 @@
 #include <ostream>
 #include <tuple>
 
-namespace lang::regex::algo {
+namespace lib::regex::algo {
 
 class Matcher {
 public:
@@ -28,4 +28,4 @@ protected:
     static void UpdateResult(size_t length, size_t final_id, Result& result);
 };
 
-}  // namespace lang::regex::algo
+}  // namespace lib::regex::algo

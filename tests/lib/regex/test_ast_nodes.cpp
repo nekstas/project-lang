@@ -5,12 +5,12 @@
 
 namespace {
 
-using lang::regex::ast::Node;
-using lang::regex::ast::CharNode;
-using lang::regex::ast::ChoiceNode;
-using lang::regex::ast::RepeatNode;
-using lang::regex::ast::RepeatType;
-using lang::regex::ast::SequenceNode;
+using lib::regex::ast::Node;
+using lib::regex::ast::CharNode;
+using lib::regex::ast::ChoiceNode;
+using lib::regex::ast::RepeatNode;
+using lib::regex::ast::RepeatType;
+using lib::regex::ast::SequenceNode;
 
 class AstBuilder {
 private:
@@ -49,8 +49,8 @@ private:
     NodesVector nodes_;
 };
 
-TEST_CASE("lang::regex::ast nodes") {
-    SECTION("lang::regex::ast::CharNode") {
+TEST_CASE("lib::regex::ast nodes") {
+    SECTION("lib::regex::ast::CharNode") {
         const auto node_a = CharNode('a');
         REQUIRE_FALSE(node_a.Equals(nullptr));
         const auto node_b = CharNode('b');
@@ -60,7 +60,7 @@ TEST_CASE("lang::regex::ast nodes") {
         REQUIRE(node_a.Equals(&node_also_a));
     }
 
-    SECTION("lang::regex::ast::NodesBaseNode") {
+    SECTION("lib::regex::ast::NodesBaseNode") {
         AstBuilder ast_builder{};
 
         SECTION("Empty nodes list") {
@@ -117,7 +117,7 @@ TEST_CASE("lang::regex::ast nodes") {
         }
     }
 
-    SECTION("lang::regex::ast::RepeatNode") {
+    SECTION("lib::regex::ast::RepeatNode") {
         AstBuilder ast_builder{};
 
         SECTION("Inner node is nullptr") {

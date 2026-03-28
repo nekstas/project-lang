@@ -4,7 +4,7 @@
 #include <set>
 #include <unordered_map>
 
-namespace lang::regex::fa {
+namespace lib::regex::fa {
 
 class State {
     template <typename Derived, typename FaWrapperT>
@@ -20,4 +20,4 @@ protected:
     size_t final_id_ = -1;
 };
 
-}  // namespace lang::regex::fa
+}  // namespace lib::regex::fa

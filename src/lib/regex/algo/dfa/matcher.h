@@ -3,7 +3,7 @@
 #include "../../dfa/dfa.h"
 #include "../matcher.h"
 
-namespace lang::regex::algo::dfa {
+namespace lib::regex::algo::dfa {
 
 class Matcher : public algo::Matcher {
 public:
@@ -15,4 +15,4 @@ private:
     regex::dfa::Dfa dfa_;
 };
 
-}  // namespace lang::regex::algo::dfa
+}  // namespace lib::regex::algo::dfa

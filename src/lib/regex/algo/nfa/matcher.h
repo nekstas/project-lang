@@ -4,7 +4,7 @@
 #include "../matcher.h"
 #include "engine.h"
 
-namespace lang::regex::algo::nfa {
+namespace lib::regex::algo::nfa {
 
 class Matcher : public algo::Matcher {
 public:
@@ -16,4 +16,4 @@ private:
     Engine engine_;
 };
 
-}  // namespace lang::regex::algo::nfa
+}  // namespace lib::regex::algo::nfa

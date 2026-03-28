@@ -4,7 +4,7 @@
 #include "../ast/all.h"
 #include "../utils/utils.h"
 
-namespace lang::regex::visitors {
+namespace lib::regex::visitors {
 
 namespace {
 
@@ -23,7 +23,7 @@ std::string Formatter::ToString(const ast::Node* node) {
 void Formatter::Visit(const ast::CharNode& node) {
     const auto code = node.GetCode();
     if (::utils::IsIn(code, kSpecialChars)) {
-        out_ << lang::regex::utils::GetSpecialCharRepr(code);
+        out_ << lib::regex::utils::GetSpecialCharRepr(code);
     } else {
         out_ << node.GetCode();
     }
@@ -65,4 +65,4 @@ void Formatter::Visit(const ast::SequenceNode& node) {
     }
 }
 
-}  // namespace lang::regex::visitors
+}  // namespace lib::regex::visitors

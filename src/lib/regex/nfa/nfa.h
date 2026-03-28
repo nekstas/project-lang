@@ -4,10 +4,10 @@
 #include "../fwd.h"
 #include "state.h"
 
-namespace lang::regex::nfa {
+namespace lib::regex::nfa {
 
 class Nfa : public fa::Fa<State> {
     friend class NfaWrapper;
 };
 
-}  // namespace lang::regex::nfa
+}  // namespace lib::regex::nfa

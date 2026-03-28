@@ -10,7 +10,7 @@
 #include "../../errors.h"
 #include "../nfa/engine.h"
 
-namespace lang::regex::algo::dfa {
+namespace lib::regex::algo::dfa {
 
 namespace {
 
@@ -60,7 +60,7 @@ public:
 
     void EnsureAllFinalIdsUsed() {
         THROW_IF(final_ids_.size() != engine.GetNfa().GetFinalStatesNumber(),
-                 lang::regex::errors::DfaBuilderError,
+                 lib::regex::errors::DfaBuilderError,
                  "There are " << final_ids_.size()
                               << " final states in created Dfa, but there were "
                               << engine.GetNfa().GetFinalStatesNumber()
@@ -83,4 +83,4 @@ regex::dfa::Dfa Builder::Build(const regex::nfa::Nfa& nfa) {
     return Impl(nfa).Build();
 }
 
-}  // namespace lang::regex::algo::dfa
+}  // namespace lib::regex::algo::dfa

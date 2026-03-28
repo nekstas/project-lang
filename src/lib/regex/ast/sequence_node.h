@@ -1,12 +1,9 @@
 #pragma once
 
-#include <memory>
-#include <vector>
-
 #include "../visitors/visitor.h"
 #include "nodes_base_node.h"
 
-namespace lang::regex::ast {
+namespace lib::regex::ast {
 
 class SequenceNode : public NodesBaseNode {
 public:
@@ -16,9 +13,9 @@ public:
         return NodesBaseNode::Equals(another_node) && CastNode<SequenceNode>(another_node);
     }
 
-    void Accept(lang::regex::visitors::Visitor& visitor) const override {
+    void Accept(visitors::Visitor& visitor) const override {
         visitor.Visit(*this);
     }
 };
 
-}  // namespace lang::regex::ast
+}  // namespace lib::regex::ast

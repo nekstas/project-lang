@@ -4,7 +4,7 @@
 #include "../ast/all.h"
 #include "../nfa/nfa.h"
 
-namespace lang::regex::visitors {
+namespace lib::regex::visitors {
 
 NfaBuilder::NfaBuilder() : last_state_(nfa_.GetRoot()) {}
 
@@ -97,4 +97,4 @@ NfaBuilder::RepeatStates NfaBuilder::MakeRepeatStates(const ast::Node& inner_nod
     return result;
 }
 
-}  // namespace lang::regex::visitors
+}  // namespace lib::regex::visitors

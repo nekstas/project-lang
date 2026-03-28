@@ -4,9 +4,9 @@
 #include "../../../src/lib/regex/parser/parser.h"
 #include "../../../src/lib/regex/visitors/ast_printer.h"
 
-TEST_CASE("lang::regex::visitors::AstPrinter") {
-    lang::regex::Parser parser;
-    lang::regex::visitors::AstPrinter ast_printer(0, false);
+TEST_CASE("lib::regex::visitors::AstPrinter") {
+    lib::regex::Parser parser;
+    lib::regex::visitors::AstPrinter ast_printer(0, false);
     auto make_ast = [&parser, &ast_printer](const std::string& code) {
         auto ptr = parser.Parse(code);
         return ast_printer.ToString(ptr.get());

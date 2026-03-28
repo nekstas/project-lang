@@ -1,6 +1,6 @@
 #include "errors.h"
 
-namespace lang::regex::errors {
+namespace lib::regex::errors {
 
 ParserError::ParserError(const std::string& message, const std::string& error_cls_name,
                          const std::string& file, size_t line,
@@ -21,4 +21,4 @@ std::string ParserError::ConstructMessageFromErrorState(const parser::ErrorState
     return builder;
 }
 
-}  // namespace lang::regex::errors
+}  // namespace lib::regex::errors

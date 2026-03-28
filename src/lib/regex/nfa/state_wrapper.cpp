@@ -3,9 +3,9 @@
 #include "../../errors/errors.h"
 #include "nfa_wrapper.h"
 
-namespace lang::regex::nfa {
+namespace lib::regex::nfa {
 
-void StateWrapper::AddEpsEdgeTo(StateWrapper another_state) {
+void StateWrapper::AddEpsEdgeTo(StateWrapper another_state) const {
     ASSERT_NOT_NULL(fa_);
     auto& real_state = fa_->ExtractState(*this);
     THROW_IF(real_state.eps_edges_.contains(another_state.state_id_), ::errors::LogicError,
@@ -15,7 +15,7 @@ void StateWrapper::AddEpsEdgeTo(StateWrapper another_state) {
     real_state.eps_edges_.insert(another_state.state_id_);
 }
 
-StateWrapper StateWrapper::AddEpsEdge() {
+StateWrapper StateWrapper::AddEpsEdge() const {
     ASSERT_NOT_NULL(fa_);
     auto another_state = fa_->CreateState();
     AddEpsEdgeTo(another_state);
@@ -28,4 +28,4 @@ size_t StateWrapper::MakeFinal() {
     return final_id;
 }
 
-}  // namespace lang::regex::nfa
+}  // namespace lib::regex::nfa

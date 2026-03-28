@@ -2,29 +2,29 @@
 
 #include "../../errors/errors.h"
 
-namespace lang::regex::ast {
+namespace lib::regex::ast {
 
-uint8_t RepeatTypeToChar(const ast::RepeatType repeat_type) {
+uint8_t RepeatTypeToChar(const RepeatType repeat_type) {
     switch (repeat_type) {
-        case ast::RepeatType::ZERO_OR_MORE:
+        case RepeatType::ZERO_OR_MORE:
             return '*';
-        case ast::RepeatType::ONE_OR_MORE:
+        case RepeatType::ONE_OR_MORE:
             return '+';
-        case ast::RepeatType::ZERO_OR_ONE:
+        case RepeatType::ZERO_OR_ONE:
             return '?';
         default:
             UNREACHABLE;
     }
 }
 
-ast::RepeatType RepeatCharToType(const uint8_t repeat_char) {
+RepeatType RepeatCharToType(const uint8_t repeat_char) {
     switch (repeat_char) {
         case '*':
-            return ast::RepeatType::ZERO_OR_MORE;
+            return RepeatType::ZERO_OR_MORE;
         case '+':
-            return ast::RepeatType::ONE_OR_MORE;
+            return RepeatType::ONE_OR_MORE;
         case '?':
-            return ast::RepeatType::ZERO_OR_ONE;
+            return RepeatType::ZERO_OR_ONE;
         default:
             UNREACHABLE;
     }
@@ -41,10 +41,10 @@ bool RepeatNode::Equals(const Node *another_node) const {
            GetNode().Equals(&repeat_node->GetNode());
 }
 
-void RepeatNode::EnsureInvariants() {
+void RepeatNode::EnsureInvariants() const {
     THROW_IF(!node_, ::errors::LogicError, "RepeatNode's inner node is nullptr.");
     THROW_IF(CastNode<RepeatNode>(node_.get()), ::errors::LogicError,
              "RepeatNode can't be inside another RepeatNode.");
 }
 
-}  // namespace lang::regex::ast
+}  // namespace lib::regex::ast

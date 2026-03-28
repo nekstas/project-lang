@@ -1,3 +1,3 @@
 #include "nfa.h"
 
-namespace lang::regex::nfa {}  // namespace lang::regex::nfa
+namespace lib::regex::nfa {}  // namespace lib::regex::nfa

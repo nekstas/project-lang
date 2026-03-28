@@ -2,7 +2,7 @@
 
 #include "fa.hpp"
 
-namespace lang::regex::fa {
+namespace lib::regex::fa {
 
 template <typename Derived, typename StateT, typename FaT, typename StateWrapperT>
 class FaWrapper {
@@ -55,4 +55,4 @@ protected:
     FaT fa_;
 };
 
-}  // namespace lang::regex::fa
+}  // namespace lib::regex::fa

@@ -4,9 +4,9 @@
 #include "../../../src/lib/regex/parser/parser.h"
 #include "../../../src/lib/regex/visitors/formatter.h"
 
-TEST_CASE("lang::regex::visitors::Formatter") {
-    lang::regex::Parser parser;
-    lang::regex::visitors::Formatter formatter;
+TEST_CASE("lib::regex::visitors::Formatter") {
+    lib::regex::Parser parser;
+    lib::regex::visitors::Formatter formatter;
     auto make_ast = [&parser, &formatter](const std::string& code) {
         auto ptr = parser.Parse(code);
         return formatter.ToString(ptr.get());
