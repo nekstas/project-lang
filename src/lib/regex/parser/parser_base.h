@@ -5,6 +5,7 @@
 #include <set>
 
 #include "../errors.h"
+#include "../utils/utils.h"
 #include "error_state.h"
 
 #define THROW_REGEX_PARSER_ERROR_IF(condition, format_expr) \
@@ -42,11 +43,12 @@ protected:
     }
 
     uint8_t Consume() {
+        THROW_REGEX_PARSER_ERROR_IF(IsEof(), "Unexpected eof.");
         assert(!IsEof());
         return code_[pos_++];
     }
 
-    bool AdvanceIf(const uint8_t& ch) {
+    bool AdvanceIf(uint8_t ch) {
         if (!IsEof() && code_[pos_] == ch) {
             ++pos_;
             return true;
@@ -54,7 +56,7 @@ protected:
         return false;
     }
 
-    void Match(const uint8_t& ch) {
+    void Match(uint8_t ch) {
         THROW_REGEX_PARSER_ERROR_IF(IsEof() || code_[pos_] != ch, "Expected: " << ch << ".");
         ++pos_;
     }
@@ -65,9 +67,15 @@ protected:
         ++pos_;
     }
 
+    uint8_t ConsumeAsciiChar() {
+        uint8_t code = Consume();
+        THROW_REGEX_PARSER_ERROR_IF(!lib::regex::utils::IsAsciiChar(code), "Expected ASCII char.");
+        return code;
+    }
+
 private:
     static std::string GenerateExpected(const std::set<uint8_t>& options) {
-        utils::FormatStream out;
+        ::utils::FormatStream out;
         bool is_first = true;
         for (const uint8_t& option : options) {
             if (!is_first) {
@@ -80,7 +88,7 @@ private:
     }
 
 private:
-    std::string code_ = {};
+    std::string code_;
     size_t pos_ = 0;
 };
 

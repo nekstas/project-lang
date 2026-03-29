@@ -9,7 +9,7 @@ namespace lib::regex::ast {
 
 class CharNode : public Node {
 public:
-    CharNode(uint8_t code) : code_(code) {}
+    explicit CharNode(uint8_t code) : code_(code) {}
 
     bool Equals(const Node* another_node) const override {
         const auto char_node = CastNode<CharNode>(another_node);

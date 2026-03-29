@@ -1,6 +1,8 @@
 #pragma once
 
+#include "char_class_node.h"
 #include "char_node.h"
+#include "char_set_node.h"
 #include "choice_node.h"
 #include "nodes_base_node.h"
 #include "repeat_node.h"

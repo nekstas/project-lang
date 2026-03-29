@@ -64,4 +64,33 @@ TEST_CASE("lib::regex::Parser errors") {
     SECTION("Backslash in the end of the string") {
         REQUIRE_THROWS_AS(make_ast("\\"), lib::regex::errors::ParserError);
     }
+    SECTION("Char set") {
+        SECTION("Empty") {
+            REQUIRE_THROWS_AS(make_ast("[]"), lib::regex::errors::ParserError);
+        }
+        SECTION("Triple dash") {
+            REQUIRE_THROWS_AS(make_ast("[---]"), lib::regex::errors::ParserError);
+        }
+        SECTION("Double dash with something else") {
+            REQUIRE_THROWS_AS(make_ast("[--a]"), lib::regex::errors::ParserError);
+            REQUIRE_THROWS_AS(make_ast("[a--]"), lib::regex::errors::ParserError);
+            REQUIRE_THROWS_AS(make_ast("[--\\w]"), lib::regex::errors::ParserError);
+            REQUIRE_THROWS_AS(make_ast("[\\w--]"), lib::regex::errors::ParserError);
+        }
+        SECTION("Range with char class") {
+            REQUIRE_THROWS_AS(make_ast("[a-\\w]"), lib::regex::errors::ParserError);
+            REQUIRE_THROWS_AS(make_ast("[\\d-b]"), lib::regex::errors::ParserError);
+            REQUIRE_THROWS_AS(make_ast("[\\S-\\s]"), lib::regex::errors::ParserError);
+        }
+        SECTION("Decreasing order") {
+            REQUIRE_THROWS_AS(make_ast("[z-a]"), lib::regex::errors::ParserError);
+        }
+        SECTION("Without close bracket") {
+            REQUIRE_THROWS_AS(make_ast("["), lib::regex::errors::ParserError);
+            REQUIRE_THROWS_AS(make_ast("[\\]"), lib::regex::errors::ParserError);
+        }
+        SECTION("Closed bracket as a char") {
+            REQUIRE_THROWS_AS(make_ast("[]]"), lib::regex::errors::ParserError);
+        }
+    }
 }

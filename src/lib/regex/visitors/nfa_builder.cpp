@@ -71,6 +71,21 @@ void NfaBuilder::Visit(const ast::SequenceNode& node) {
     }
 }
 
+void NfaBuilder::Visit(const ast::CharSetNode& node) {
+    auto prev_last_state = last_state_;
+    last_state_ = nfa_.CreateState();
+
+    for (size_t ch = 0; ch < consts::kStateEdgesCount; ++ch) {
+        if (node.HasEdge(ch)) {
+            prev_last_state.AddEdgeTo(ch, last_state_);
+        }
+    }
+}
+
+void NfaBuilder::Visit(const ast::CharClassNode& node) {
+    NfaBuilder::Visit(static_cast<const ast::CharSetNode&>(node));
+}
+
 void NfaBuilder::VisitZeroOrMoreRepeatNode(const ast::Node& inner_node) {
     auto repeat_states = MakeRepeatStates(inner_node);
     repeat_states.end_inner_state.AddEpsEdgeTo(repeat_states.start_inner_state);

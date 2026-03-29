@@ -17,6 +17,9 @@
 #define UNREACHABLE assert(false && "Code execution reached unreachable line.")
 #define ASSERT_NOT_NULL(condition) \
     THROW_IF((condition) == nullptr, ::errors::LogicError, "Unexpected null pointer.")
+#define NOT_IMPLEMENTED_YET              \
+    THROW(::errors::NotImplementedError, \
+          "Function " << __PRETTY_FUNCTION__ << " is not implemented yet")
 
 namespace errors {
 
@@ -27,6 +30,11 @@ public:
 };
 
 class LogicError : public RuntimeError {
+public:
+    using RuntimeError::RuntimeError;
+};
+
+class NotImplementedError : public RuntimeError {
 public:
     using RuntimeError::RuntimeError;
 };

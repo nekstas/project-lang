@@ -18,6 +18,8 @@ class NodesBaseNode;
 class ChoiceNode;
 class SequenceNode;
 class RepeatNode;
+class CharSetNode;
+class CharClassNode;
 
 }  // namespace ast
 

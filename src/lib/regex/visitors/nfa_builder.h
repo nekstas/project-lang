@@ -28,6 +28,8 @@ public:
     void Visit(const ast::ChoiceNode& node) override;
     void Visit(const ast::RepeatNode& node) override;
     void Visit(const ast::SequenceNode& node) override;
+    void Visit(const ast::CharSetNode& node) override;
+    void Visit(const ast::CharClassNode& node) override;
 
 private:
     void VisitZeroOrMoreRepeatNode(const ast::Node& inner_node);

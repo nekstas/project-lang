@@ -5,9 +5,9 @@
 
 namespace {
 
-using lib::regex::ast::Node;
 using lib::regex::ast::CharNode;
 using lib::regex::ast::ChoiceNode;
+using lib::regex::ast::Node;
 using lib::regex::ast::RepeatNode;
 using lib::regex::ast::RepeatType;
 using lib::regex::ast::SequenceNode;
@@ -143,6 +143,14 @@ TEST_CASE("lib::regex::ast nodes") {
             REQUIRE_FALSE(node1.Equals(&node3));
             REQUIRE_FALSE(node3.Equals(&node4));
         }
+    }
+
+    SECTION("lib::regex::ast::CharSetNode") {
+        // TODO: не очень важно пока что
+    }
+
+    SECTION("lib::regex::ast::CharClassNode") {
+        // TODO: не очень важно пока что
     }
 }
 

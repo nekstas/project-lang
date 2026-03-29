@@ -23,6 +23,9 @@ add_library(lib_regex STATIC
     algo/dfa/matcher.cpp
     dfa/dfa.cpp
     errors.cpp
+    ast/char_set_node.cpp
+    ast/char_set_node.h
+    ast/char_class_node.cpp
 )
 
 target_link_libraries(lib_regex PRIVATE lib_errors lib_utils)

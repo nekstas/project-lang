@@ -60,11 +60,11 @@ MatcherCreator::GetMatcher<lib::regex::algo::dfa::Matcher>() {
     return std::make_unique<lib::regex::algo::dfa::Matcher>(dfa);
 }
 
-TEMPLATE_TEST_CASE("lib::regex::algo::Matcher implementations", "",
-                   lib::regex::algo::nfa::Matcher, lib::regex::algo::dfa::Matcher) {
+TEMPLATE_TEST_CASE("lib::regex::algo::Matcher implementations", "", lib::regex::algo::nfa::Matcher,
+    lib::regex::algo::dfa::Matcher) {
     MatcherCreator creator;
-    auto match = [&creator](const std::initializer_list<std::string> tokens,
-                            const std::string& code) {
+    auto match = [&creator](
+                     const std::initializer_list<std::string> tokens, const std::string& code) {
         creator.Begin();
         for (const auto& token : tokens) {
             creator.AddToken(token);
@@ -132,7 +132,7 @@ TEMPLATE_TEST_CASE("lib::regex::algo::Matcher implementations", "",
     }
 
     SECTION("Difficult example") {
-        const std::string regexp = "(https?://)?example.(com|ru|org)(/(example|a+))*";
+        const std::string regexp = "(https?://)?example\\.(com|ru|org)(/(example|a+))*";
         REQUIRE(match({regexp}, "example.com") == Result{true, 11, 0});
         REQUIRE(match({regexp}, "http://example.com") == Result{true, 18, 0});
         REQUIRE(match({regexp}, "https://example.com") == Result{true, 19, 0});
@@ -160,6 +160,53 @@ TEMPLATE_TEST_CASE("lib::regex::algo::Matcher implementations", "",
             REQUIRE_THROWS_AS(match({"a+", "aa"}, "aab"), lib::regex::errors::DfaBuilderError);
         }
     }
-}
 
+    SECTION("Char classes") {
+        SECTION("\\w, \\W") {
+            REQUIRE(match({"\\w+", "\\W+"},
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+") ==
+                    Result{true, 63, 0});
+            REQUIRE(match({"\\w+", "\\W+"}, " !@#$%^&*(0") == Result{true, 10, 1});
+        }
+        SECTION("\\d, \\D") {
+            REQUIRE(match({"\\d+", "\\D+"}, "0123456789_") == Result{true, 10, 0});
+            REQUIRE(match({"\\d+", "\\D+"}, "0123456789a") == Result{true, 10, 0});
+            REQUIRE(match({"\\d+", "\\D+"}, " !@#$%^&*(0") == Result{true, 10, 1});
+            REQUIRE(match({"\\d+", "\\D+"}, "abc012") == Result{true, 3, 1});
+        }
+        SECTION("\\s, \\S") {
+            REQUIRE(match({"\\s+", "\\S+"}, " \t\n\r\f\v_") == Result{true, 6, 0});
+            REQUIRE(match({"\\s+", "\\S+"}, "a9.? a9.?") == Result{true, 4, 1});
+        }
+        SECTION("Any char except newline") {
+            REQUIRE(match({".+"},
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_!@#$%^&*("
+                        " \t\r\f\v\n") == Result{true, 77, 0});
+            REQUIRE(match({".+"}, "\na\n") == Result{false});
+        }
+    }
+
+    SECTION("Char set") {
+        SECTION("Simple") {
+            REQUIRE(match({"[a-zA-Z0-9_]+", "[^a-zA-Z0-9_]+"},
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+") ==
+                    Result{true, 63, 0});
+            REQUIRE(
+                match({"[a-zA-Z0-9_]+", "[^a-zA-Z0-9_]+"}, " !@#$%^&*(0") == Result{true, 10, 1});
+        }
+        SECTION("Char class inside") {
+            REQUIRE(match({"[\\w]+", "[\\W]+"},
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+") ==
+                    Result{true, 63, 0});
+            REQUIRE(match({"[\\w]+", "[\\W]+"}, " !@#$%^&*(0") == Result{true, 10, 1});
+            REQUIRE(match({"[^\\W]+", "[^\\w]+"},
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+") ==
+                    Result{true, 63, 0});
+            REQUIRE(match({"[^\\W]+", "[^\\w]+"}, " !@#$%^&*(0") == Result{true, 10, 1});
+        }
+        SECTION("Custom range") {
+            REQUIRE(match({"[a-c?-]+"}, "-?--a?b?c?-?--") == Result{true, 14, 0});
+        }
+    }
+}
 }  // namespace
