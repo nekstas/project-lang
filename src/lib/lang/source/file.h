@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -20,6 +19,10 @@ public:
         return content_.size();
     }
 
+    const std::string& GetContent() const {
+        return content_;
+    }
+
 private:
     void BuildIndex();
 
@@ -28,5 +31,7 @@ protected:
     std::string content_;
     std::vector<size_t> line_starts_;
 };
+
+std::ostream& operator<<(std::ostream& out, const File& file);
 
 }  // namespace lib::lang::source

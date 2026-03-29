@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 
+#include "stop_pipeline.hpp"
 #include "utils.hpp"
 
 namespace lib::flow {
@@ -21,8 +22,13 @@ public:
 public:
     typename TypeSuper::OutputT Run(typename TypeSuper::InputT inputs, Context& ctx) const {
         typename TypeSuper::OutputT result;
-        for (auto& input : inputs) {
-            result.emplace_back(pipeline_.Run(std::move(input), ctx));
+        for (size_t i = 0; i < inputs.size(); ++i) {
+            try {
+                result.emplace_back(pipeline_.Run(std::move(inputs[i]), ctx));
+            } catch (StopPipeline& stop_pipeline) {
+                stop_pipeline.AddStageName(::utils::FormatStream{} << "Map[" << i << "]");
+                throw;
+            }
         }
         return result;
     }

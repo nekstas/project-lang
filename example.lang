@@ -1,0 +1,22 @@
+fn sum_range(mut a: Int, b: Int) -> Int {
+  if (a > b) {
+    return 0;
+  }
+  mut s = b;
+  while (a != b) {
+      s = s + a;
+      a = a + 1;
+  }
+  return s;
+}
+
+fn main() {
+  let n = input();
+  mut result: Int;
+  if (n >= 1) {
+    result = sum_range(1, n);
+  } else {
+    result = -1;
+  }
+  print(result);
+}

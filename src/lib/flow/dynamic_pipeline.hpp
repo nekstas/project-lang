@@ -6,13 +6,18 @@
 #include <vector>
 
 #include "stage.hpp"
+#include "stop_pipeline.hpp"
+#include "titled_pipeline.h"
 #include "typed_stage.hpp"
 
 namespace lib::flow {
 
 template <typename Context, typename In, typename Out>
-class DynamicPipeline : public TypedStage<DynamicPipeline<Context, In, Out>, Context, In, Out> {
+class DynamicPipeline : public TypedStage<DynamicPipeline<Context, In, Out>, Context, In, Out>,
+                        public TitledPipeline {
 public:
+    using TitledPipeline::TitledPipeline;
+
     void AddStage(std::unique_ptr<Stage<Context>> stage, bool is_last = false) {
         THROW_IF(
             ready_, ::errors::LogicError, "Attempt to modify pipeline after added last stage.");
@@ -38,7 +43,12 @@ public:
             "DynamicPipeline is not ready yet. (There are not marked last stage)");
         std::any current = std::move(input);
         for (const auto& stage : stages_) {
-            current = stage->RunAny(current, ctx);
+            try {
+                current = stage->RunAny(current, ctx);
+            } catch (StopPipeline& stop_pipeline) {
+                stop_pipeline.AddStageName(GetTitle());
+                throw;
+            }
         }
         assert(std::type_index(current.type()) == this->OutputType());
         return std::any_cast<Out>(std::move(current));
@@ -46,7 +56,7 @@ public:
 
     std::string Name() const override {
         std::stringstream out;
-        out << "[";
+        out << GetTitle() << "[";
         for (size_t i = 0; i < Size(); ++i) {
             if (i != 0) {
                 out << ", ";
