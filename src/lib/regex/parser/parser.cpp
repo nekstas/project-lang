@@ -1,5 +1,6 @@
 #include "parser.h"
 
+#include "../../utils/magic_templates.hpp"
 #include "../../utils/utils.h"
 #include "../ast/all.h"
 #include "../utils/utils.h"

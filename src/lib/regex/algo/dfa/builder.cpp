@@ -3,6 +3,7 @@
 #include <map>
 #include <queue>
 
+#include "../../../utils/better_queue.hpp"
 #include "../../../utils/utils.h"
 #include "../../dfa/dfa.h"
 #include "../../dfa/dfa_wrapper.h"
@@ -60,12 +61,11 @@ public:
 
     void EnsureAllFinalIdsUsed() {
         THROW_IF(final_ids_.size() != engine.GetNfa().GetFinalStatesNumber(),
-                 lib::regex::errors::DfaBuilderError,
-                 "There are " << final_ids_.size()
-                              << " final states in created Dfa, but there were "
-                              << engine.GetNfa().GetFinalStatesNumber()
-                              << " final states in given Nfa. (Some old final states can't be "
-                                 "achieved in new Nfa.)");
+            lib::regex::errors::DfaBuilderError,
+            "There are " << final_ids_.size() << " final states in created Dfa, but there were "
+                         << engine.GetNfa().GetFinalStatesNumber()
+                         << " final states in given Nfa. (Some old final states can't be "
+                            "achieved in new Nfa.)");
         dfa_wrapper_.SetFinalStatesNumber(final_ids_.size());
     }
 
