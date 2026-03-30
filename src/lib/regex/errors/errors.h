@@ -1,14 +1,13 @@
 #pragma once
 
-#include "../errors/errors.h"
-#include "parser/error_state.h"
+#include "../../errors/errors.h"
+#include "../parser/error_state.h"
 
 namespace lib::regex::errors {
 
 class ParserError : public ::errors::RuntimeError {
 public:
-    ParserError(const std::string& message, const std::string& error_cls_name,
-                const std::string& file, size_t line, const parser::ErrorState& error_state);
+    ParserError(const ::errors::ErrorInfo& info, const parser::ErrorState& error_state);
 
     static std::string ConstructMessageFromErrorState(const parser::ErrorState& error_state);
 

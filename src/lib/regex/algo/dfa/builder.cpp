@@ -8,7 +8,7 @@
 #include "../../dfa/dfa.h"
 #include "../../dfa/dfa_wrapper.h"
 #include "../../dfa/state_wrapper.h"
-#include "../../errors.h"
+#include "../../errors/errors.h"
 #include "../nfa/engine.h"
 
 namespace lib::regex::algo::dfa {

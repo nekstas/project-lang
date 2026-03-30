@@ -19,6 +19,10 @@ public:
         return source_id_;
     }
 
+    bool operator==(SourceDesc another) const {
+        return GetSourceId() == another.GetSourceId();
+    }
+
 private:
     size_t source_id_;
 };

@@ -22,6 +22,14 @@ public:
         return length_;
     }
 
+    size_t GetBegin() const {
+        return offset_;
+    }
+
+    size_t GetEnd() const {
+        return offset_ + length_;
+    }
+
 public:
     static Span FromRange(SourceDesc desc, size_t begin, size_t end);
 

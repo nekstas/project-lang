@@ -4,7 +4,6 @@
 #include "../../utils/utils.h"
 #include "../ast/all.h"
 #include "../ast/char_set_node.h"
-#include "../utils/utils.h"
 
 namespace lib::regex {
 
@@ -15,7 +14,7 @@ constexpr std::string kSpecialChars = "\\\n\t\r\f\v'";
 std::string CharToRepr(uint8_t code) {
     ::utils::FormatStream out;
     if (::utils::IsIn(code, kSpecialChars)) {
-        out << "'" << utils::GetSpecialCharRepr(code) << "'";
+        out << "'" << ::utils::GetSpecialCharRepr(code) << "'";
     } else if (std::isprint(code)) {
         out << "'" << code << "'";
     } else {

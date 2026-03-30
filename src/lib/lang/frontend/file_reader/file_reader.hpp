@@ -23,11 +23,17 @@ public:
         DIAG_REPORT_IF(!in_file.is_open(), ctx, diag::CannotOpenFileFatal, file_path);
 
         std::stringstream content_stream;
-
         content_stream << in_file.rdbuf();
         DIAG_REPORT_IF(in_file.bad(), ctx, diag::FileIOFatal, file_path);
 
-        return ctx.src.template AddSource<source::File>(file_path, content_stream.str());
+        std::string result_content = ::utils::FilterSlashR(content_stream.str());
+
+        try {
+            return ctx.src.template AddSource<source::File>(file_path, result_content);
+        } catch (const errors::InvalidEncodingError& error) {
+            DIAG_REPORT(ctx, diag::FileInvalidEncodingFatal, file_path, error.GetErrInfo());
+        }
+        UNREACHABLE;
     }
 
     std::string Name() const override {

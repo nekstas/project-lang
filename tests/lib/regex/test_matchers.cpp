@@ -4,7 +4,7 @@
 #include "../../../src/lib/regex/algo/dfa/matcher.h"
 #include "../../../src/lib/regex/algo/nfa/matcher.h"
 #include "../../../src/lib/regex/compiler/compiler.h"
-#include "../../../src/lib/regex/errors.h"
+#include "../../../src/lib/regex/errors/errors.h"
 #include "../../../src/lib/regex/parser/parser.h"
 #include "../../../src/lib/regex/visitors/nfa_builder.h"
 #include "catch2/catch_template_test_macros.hpp"

@@ -3,7 +3,6 @@
 #include "../../errors/errors.h"
 #include "../../utils/utils.h"
 #include "../ast/all.h"
-#include "../utils/utils.h"
 
 namespace lib::regex::visitors {
 
@@ -25,11 +24,11 @@ std::string Formatter::ToString(const ast::Node* node) {
 std::string CharToCommonRepr(uint8_t code) {
     ::utils::FormatStream out;
     if (::utils::IsIn(code, kSpecialCommonChars)) {
-        out << utils::GetSpecialCharRepr(code);
+        out << ::utils::GetSpecialCharRepr(code);
     } else if (std::isprint(code)) {
         out << code;
     } else {
-        out << "\\x" << utils::EscapeHexByte(code);
+        out << "\\x" << ::utils::EscapeHexByte(code);
     }
     return out;
 }
@@ -41,7 +40,7 @@ std::string CharToSetCharsRepr(uint8_t code, bool is_first) {
     } else if (std::isprint(code)) {
         out << code;
     } else {
-        out << "\\x" << utils::EscapeHexByte(code);
+        out << "\\x" << ::utils::EscapeHexByte(code);
     }
     return out;
 }

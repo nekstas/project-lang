@@ -22,24 +22,21 @@ public:
 
     template <typename Context>
     std::string GetDiagnosticsString(const Context& ctx) const {
-        auto render_ctx = ConstructRenderContext(ctx);
+        auto render_ctx = render::ConstructRenderContext(ctx);
         if (IsEmpty()) {
             return "No diagnostics found.\n";
         }
         std::stringstream out;
         out << GetDiagnosticsCount() << " diagnostics found.\n";
         for (const auto& diag : diags_) {
-            out << diag->GetMessage(render_ctx) << "\n";
+            auto message = diag->GetMessage(render_ctx);
+            ::utils::NormalizeEndNewLine(message);
+            out << message;
         }
         return out.str();
     }
 
 private:
-    template <typename Context>
-    static diag::RenderContext ConstructRenderContext(const Context& common_ctx) {
-        return diag::RenderContext{.src = common_ctx.src};
-    }
-
     template <typename Context>
     void Report(const flow::Stage<Context>& stage, std::unique_ptr<diag::Diag> diag) {
         diags_.emplace_back(std::move(diag));

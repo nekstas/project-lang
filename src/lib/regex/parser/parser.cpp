@@ -3,7 +3,6 @@
 #include "../../utils/magic_templates.hpp"
 #include "../../utils/utils.h"
 #include "../ast/all.h"
-#include "../utils/utils.h"
 
 #define U8(expr) static_cast<uint8_t>(expr)
 
@@ -174,7 +173,7 @@ std::unique_ptr<ast::Node> Parser::ParseCharSet() {
 }
 
 std::unique_ptr<ast::Node> Parser::ParseChar() {
-    auto char_length = utils::GetUtf8CharLength(Peek());
+    auto char_length = ::utils::GetUtf8CharLength(Peek());
     switch (char_length) {
         case 0:
             THROW_REGEX_PARSER_ERROR("Got invalid utf8 sequence (starts from 0b10... byte).");
@@ -266,7 +265,7 @@ std::unique_ptr<ast::Node> Parser::ParseWideChar(size_t char_length) {
         uint8_t code = Consume();
         if (i > 0) {
             THROW_REGEX_PARSER_ERROR_IF(
-                utils::GetUtf8CharLength(code) != 0, "Incorrect utf-8 char.");
+                ::utils::GetUtf8CharLength(code) != 0, "Incorrect utf-8 char.");
         }
         wide_char.push_back(code);
     }

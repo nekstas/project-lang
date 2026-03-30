@@ -1,11 +1,10 @@
 #pragma once
 
 #include <cassert>
-#include <cstdint>
 #include <set>
 
-#include "../errors.h"
-#include "../utils/utils.h"
+#include "../../utils/utils.h"
+#include "../errors/errors.h"
 #include "error_state.h"
 
 #define THROW_REGEX_PARSER_ERROR_IF(condition, format_expr) \
@@ -63,13 +62,13 @@ protected:
 
     void Match(const std::set<uint8_t>& options) {
         THROW_REGEX_PARSER_ERROR_IF(IsEof() || !options.contains(code_[pos_]),
-                                    "Expected one of: " << GenerateExpected(options));
+            "Expected one of: " << GenerateExpected(options));
         ++pos_;
     }
 
     uint8_t ConsumeAsciiChar() {
         uint8_t code = Consume();
-        THROW_REGEX_PARSER_ERROR_IF(!lib::regex::utils::IsAsciiChar(code), "Expected ASCII char.");
+        THROW_REGEX_PARSER_ERROR_IF(!::utils::IsAsciiChar(code), "Expected ASCII char.");
         return code;
     }
 

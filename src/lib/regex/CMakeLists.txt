@@ -5,8 +5,6 @@ add_library(lib_regex STATIC
     parser/parser.cpp
     visitors/ast_printer.cpp
     visitors/formatter.cpp
-    utils/utils.cpp
-    utils/utils.h
     visitors/nfa_builder.cpp
     fa/state.cpp
     fa/state_wrapper.hpp
@@ -22,7 +20,7 @@ add_library(lib_regex STATIC
     algo/dfa/builder.cpp
     algo/dfa/matcher.cpp
     dfa/dfa.cpp
-    errors.cpp
+    errors/errors.cpp
     ast/char_set_node.cpp
     ast/char_set_node.h
     ast/char_class_node.cpp

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string>
-#include <vector>
+
+#include "index.h"
+#include "line_column.h"
 
 namespace lib::lang::source {
 
@@ -21,20 +23,23 @@ public:
         return content_;
     }
 
-    size_t Size() const {
-        return GetContent().size();
+    std::string GetLine(size_t line_number) const;
+
+    const Index& GetIndex() const {
+        return index_;
     }
 
-private:
-    void BuildIndex();
+    size_t Size() const {
+        return index_.Size();
+    }
 
 private:
     std::string name_;
     std::string content_;
-    std::vector<size_t> line_starts_;
+    Index index_;
 };
 
-std::ostream& operator<<(std::ostream& out, const Source& file);
+std::ostream& operator<<(std::ostream& out, const Source& source);
 
 template <typename T>
 concept DerivedSource = std::derived_from<T, Source>;

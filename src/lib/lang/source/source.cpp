@@ -5,18 +5,10 @@
 namespace lib::lang::source {
 
 Source::Source(const std::string& name, const std::string& content)
-    : name_(name), content_(content) {
-    BuildIndex();
-}
+    : name_(name), content_(content), index_(content_) {}
 
-void Source::BuildIndex() {
-    line_starts_.clear();
-    line_starts_.push_back(0);
-    for (size_t i = 0; i < Size(); ++i) {
-        if (content_[i] == '\n') {
-            line_starts_.push_back(i + 1);
-        }
-    }
+std::string Source::GetLine(size_t line_number) const {
+    return index_.GetLine(line_number);
 }
 
 std::ostream& operator<<(std::ostream& out, const Source& source) {

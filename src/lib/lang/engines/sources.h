@@ -5,6 +5,7 @@
 #include "../../errors/errors.h"
 #include "../source/source.h"
 #include "../source_desc.h"
+#include "../stats/src/analyzer.h"
 
 namespace lib::lang::engines {
 
@@ -12,7 +13,10 @@ class Sources {
 public:
     template <source::DerivedSource SourceType, typename... Args>
     SourceDesc AddSource(Args&&... args) {
-        return AddSource(std::make_unique<SourceType>(std::forward<Args>(args)...));
+        SourceDesc desc = AddSource(std::make_unique<SourceType>(std::forward<Args>(args)...));
+        const auto& source = GetSource(desc);
+        stats_.AddSource(source);
+        return desc;
     }
 
     const source::Source& GetSource(SourceDesc desc) const {
@@ -26,6 +30,10 @@ public:
         return sources_.size();
     }
 
+    const stats::src::Stats& GetStats() const {
+        return stats_.GetStats();
+    }
+
 private:
     SourceDesc AddSource(std::unique_ptr<source::Source> source) {
         size_t source_id = sources_.size();
@@ -35,6 +43,7 @@ private:
 
 private:
     std::vector<std::unique_ptr<source::Source>> sources_;
+    stats::src::Analyzer stats_;
 };
 
 }  // namespace lib::lang::engines
