@@ -3,6 +3,7 @@
 #include "../../../src/lib/regex/algo/dfa/builder.h"
 #include "../../../src/lib/regex/algo/dfa/matcher.h"
 #include "../../../src/lib/regex/algo/nfa/matcher.h"
+#include "../../../src/lib/regex/compiler/compiler.h"
 #include "../../../src/lib/regex/errors.h"
 #include "../../../src/lib/regex/parser/parser.h"
 #include "../../../src/lib/regex/visitors/nfa_builder.h"
@@ -26,50 +27,23 @@ namespace {
 
 using Result = lib::regex::algo::Matcher::Result;
 
-class MatcherCreator {
-public:
-    void Begin() {
-        builder_.Clear();
-    }
-
-    void AddToken(const std::string& regex) {
-        const auto ptr = parser_.Parse(regex);
-        assert(ptr != nullptr);
-        builder_.ExtendFromAst(*ptr);
-    }
-
-    template <typename T>
-    std::unique_ptr<lib::regex::algo::Matcher> GetMatcher();
-
-private:
-    lib::regex::Parser parser_;
-    lib::regex::visitors::NfaBuilder builder_;
-};
-
-template <>
-std::unique_ptr<lib::regex::algo::Matcher>
-MatcherCreator::GetMatcher<lib::regex::algo::nfa::Matcher>() {
-    return std::make_unique<lib::regex::algo::nfa::Matcher>(builder_.GetNfa());
-}
-
-template <>
-std::unique_ptr<lib::regex::algo::Matcher>
-MatcherCreator::GetMatcher<lib::regex::algo::dfa::Matcher>() {
-    lib::regex::algo::dfa::Builder builder{};
-    const auto dfa = builder.Build(builder_.GetNfa());
-    return std::make_unique<lib::regex::algo::dfa::Matcher>(dfa);
-}
-
 TEMPLATE_TEST_CASE("lib::regex::algo::Matcher implementations", "", lib::regex::algo::nfa::Matcher,
     lib::regex::algo::dfa::Matcher) {
-    MatcherCreator creator;
-    auto match = [&creator](
-                     const std::initializer_list<std::string> tokens, const std::string& code) {
-        creator.Begin();
-        for (const auto& token : tokens) {
-            creator.AddToken(token);
+    lib::regex::Compiler compiler;
+    auto match = [&compiler](
+                     const std::initializer_list<std::string> regexes, const std::string& code) {
+        compiler.Clear();
+        size_t i = 0;
+        for (const auto& regex : regexes) {
+            size_t final_id = compiler.AddRegex(regex);
+            REQUIRE(final_id == i);
+            ++i;
         }
-        return creator.GetMatcher<TestType>()->Match(code);
+        if constexpr (std::is_same_v<TestType, lib::regex::algo::nfa::Matcher>) {
+            return TestType(compiler.CompileToNfa()).Match(code);
+        } else {
+            return TestType(compiler.CompileToDfa()).Match(code);
+        }
     };
 
     SECTION("Basic") {

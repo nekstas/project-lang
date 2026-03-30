@@ -2,11 +2,17 @@
 
 #include <cstddef>
 
+#include "../source_desc.h"
+
 namespace lib::lang::source {
 
 class Span {
 public:
-    Span(size_t offset, size_t length);
+    Span(SourceDesc desc, size_t offset, size_t length);
+
+    SourceDesc GetDesc() const {
+        return desc_;
+    }
 
     size_t GetOffset() const {
         return offset_;
@@ -16,7 +22,11 @@ public:
         return length_;
     }
 
+public:
+    static Span FromRange(SourceDesc desc, size_t begin, size_t end);
+
 protected:
+    SourceDesc desc_;
     size_t offset_;
     size_t length_;
 };

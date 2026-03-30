@@ -2,13 +2,15 @@
 
 #include <concepts>
 
-#include "../diag/diag_engine.h"
-#include "consts.h"
+#include "../consts.h"
+#include "../engines/diagnostics.h"
+#include "../engines/sources.h"
 
 namespace lib::lang {
 
 struct BaseContext {
-    diag::DiagEngine diag{context::consts::kMaxErrors};
+    engines::Diagnostics diag{consts::kMaxErrors};
+    engines::Sources src;
 };
 
 template <typename T>

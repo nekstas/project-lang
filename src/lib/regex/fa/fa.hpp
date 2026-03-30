@@ -13,6 +13,10 @@ class Fa {
     friend class FaWrapper;
 
 public:
+    bool IsEmpty() const {
+        return Size() == 0;
+    }
+
     size_t Size() const {
         return states_.size();
     }
@@ -22,8 +26,8 @@ public:
     }
 
     const StateT& GetState(size_t state_id) const {
-        THROW_IF(state_id >= states_.size(), ::errors::LogicError,
-                 "Unknown state_id = " << state_id);
+        THROW_IF(
+            state_id >= states_.size(), ::errors::LogicError, "Unknown state_id = " << state_id);
         return states_[state_id];
     }
 

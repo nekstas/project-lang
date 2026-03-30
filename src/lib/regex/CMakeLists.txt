@@ -26,6 +26,7 @@ add_library(lib_regex STATIC
     ast/char_set_node.cpp
     ast/char_set_node.h
     ast/char_class_node.cpp
+    compiler/compiler.cpp
 )
 
 target_link_libraries(lib_regex PRIVATE lib_errors lib_utils)

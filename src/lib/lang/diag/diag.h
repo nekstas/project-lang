@@ -3,6 +3,8 @@
 #include <concepts>
 #include <string>
 
+#include "render_context.h"
+
 namespace lib::lang::diag {
 
 enum class Severity { NOTE, WARNING, ERROR, FATAL };
@@ -17,7 +19,7 @@ public:
         return severity_;
     }
 
-    virtual std::string GetMessage() const = 0;
+    virtual std::string GetMessage(const RenderContext& ctx) const = 0;
 
 private:
     Severity severity_;

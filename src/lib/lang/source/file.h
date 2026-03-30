@@ -1,13 +1,12 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
+#include "../../utils/format_stream.h"
 #include "path.h"
+#include "source.h"
 
 namespace lib::lang::source {
 
-class File {
+class File : public Source {
 public:
     File(const Path& path, const std::string& content);
 
@@ -15,21 +14,10 @@ public:
         return path_;
     }
 
-    size_t Size() const {
-        return content_.size();
-    }
-
-    const std::string& GetContent() const {
-        return content_;
-    }
-
-private:
-    void BuildIndex();
+    std::string GetTitle() const override;
 
 protected:
     Path path_;
-    std::string content_;
-    std::vector<size_t> line_starts_;
 };
 
 std::ostream& operator<<(std::ostream& out, const File& file);

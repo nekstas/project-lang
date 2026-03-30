@@ -1,4 +1,5 @@
 add_subdirectory(lib)
+add_subdirectory(lang)
 
 add_executable(main
     main.cpp

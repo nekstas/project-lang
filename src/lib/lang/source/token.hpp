@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iomanip>
 #include <string>
 
 #include "span.h"
@@ -18,6 +19,10 @@ public:
         return type_;
     }
 
+    bool HasValue() const {
+        return !value_.empty();
+    }
+
     const std::string& GetValue() const {
         return value_;
     }
@@ -31,5 +36,14 @@ protected:
     std::string value_;
     Span span_;
 };
+
+template <typename TokenType>
+std::ostream& operator<<(std::ostream& out, const Token<TokenType>& token) {
+    out << "<" << token.GetType();
+    if (token.HasValue()) {
+        out << ":" << std::quoted(token.GetValue());
+    }
+    return out << ">";
+}
 
 }  // namespace lib::lang::source

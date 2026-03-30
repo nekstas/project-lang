@@ -28,7 +28,7 @@ class CannotOpenFileFatal : public FileFatal {
 public:
     explicit CannotOpenFileFatal(const source::Path& path) : FileFatal(path) {}
 
-    std::string GetMessage() const override {
+    std::string GetMessage(const RenderContext&) const override {
         return ::utils::FormatStream{} << "Cannot open file " << GetPath() << ".";
     }
 };
@@ -37,7 +37,7 @@ class FileIOFatal : public FileFatal {
 public:
     explicit FileIOFatal(const source::Path& path) : FileFatal(path) {}
 
-    std::string GetMessage() const override {
+    std::string GetMessage(const RenderContext&) const override {
         return ::utils::FormatStream{} << "I/O error while reading file " << GetPath() << ".";
     }
 };
