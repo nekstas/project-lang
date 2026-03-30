@@ -49,14 +49,14 @@ private:
     };
 
 public:
-    std::vector<source::Token<TokenType>> Run(SourceDesc desc, Context& ctx) const override {
+    Tokens<TokenType> Run(SourceDesc desc, Context& ctx) const override {
         THROW_IF(!ready_, ::errors::LogicError, "Lexer is not ready.");
         const std::string& code = ctx.src.GetSource(desc).GetContent();
         size_t initial_state = dfa_.GetRootId();
 
         PreviouslyFailed previously_failed;
         LexerState current = {.pos = 0, .state = initial_state};
-        std::vector<source::Token<TokenType>> result;
+        Tokens<TokenType> result;
 
         auto get_next_state = [&] {
             if (current.pos < code.size()) {

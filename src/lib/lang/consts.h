@@ -4,6 +4,6 @@
 
 namespace lib::lang::consts {
 
-constexpr size_t kMaxErrors = 10;
+constexpr size_t kMaxErrors = 3;
 
 }

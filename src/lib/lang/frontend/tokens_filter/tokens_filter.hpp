@@ -7,10 +7,10 @@
 namespace lib::lang::frontend {
 
 template <typename TokenType, ContextLike Context>
-class Lexer
-    : public flow::TypedStage<Lexer<TokenType, Context>, Context, SourceDesc, Tokens<TokenType>> {
+class TokensFilter : public flow::TypedStage<TokensFilter<TokenType, Context>, Context,
+                         Tokens<TokenType>, Tokens<TokenType>> {
 public:
-    virtual Tokens<TokenType> Run(SourceDesc desc, Context& ctx) const = 0;
+    virtual Tokens<TokenType> Run(Tokens<TokenType> tokens, Context& ctx) const = 0;
 };
 
 }  // namespace lib::lang::frontend

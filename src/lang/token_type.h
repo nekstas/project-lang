@@ -7,7 +7,43 @@
 
 #define TOKEN_TYPE_LIST(X) \
     X(END_OF_FILE)         \
-    X(NUMBER)
+                           \
+    X(WHITESPACE)          \
+    X(NEW_LINE)            \
+                           \
+    X(COMMA)               \
+    X(SEMICOLON)           \
+                           \
+    X(COLON)               \
+    X(ARROW)               \
+                           \
+    X(LPAREN)              \
+    X(RPAREN)              \
+    X(LBRACE)              \
+    X(RBRACE)              \
+                           \
+    X(FN_K)                \
+    X(LET_K)               \
+    X(MUT_K)               \
+    X(IF_K)                \
+    X(ELSE_K)              \
+    X(WHILE_K)             \
+    X(RETURN_K)            \
+                           \
+    X(ASSIGN_O)            \
+                           \
+    X(PLUS_O)              \
+    X(MINUS_O)             \
+                           \
+    X(EQ_O)                \
+    X(NE_O)                \
+    X(LT_O)                \
+    X(GT_O)                \
+    X(LE_O)                \
+    X(GE_O)                \
+                           \
+    X(NUMBER)              \
+    X(IDENTIFIER)
 
 namespace lang {
 
