@@ -8,7 +8,11 @@ add_library(lib_lang STATIC
     frontend/file_reader/file_reader.hpp
     diag/diag.cpp
     engines/diagnostics.cpp
+    frontend/file_reader/file_reader.hpp
+    frontend/lexer/lexer.hpp
     frontend/lexer/impl/regex_lexer.hpp
+    frontend/tokens_filter/tokens_filter.hpp
+    frontend/tokens_filter/impl/simple_tokens_filter.hpp
     engines/sources.cpp
     source/source.cpp
     stats/src/stats.cpp

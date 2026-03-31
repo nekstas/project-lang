@@ -2,13 +2,13 @@
 
 #include <string>
 
-namespace lib::regex::utils {
+namespace utils {
 
 class Indentable;
 
 class WithIndent {
 public:
-    WithIndent(Indentable& ast_printer);
+    explicit WithIndent(Indentable& ast_printer);
     ~WithIndent();
     WithIndent(const WithIndent&) = delete;
     WithIndent(WithIndent&&) = delete;
@@ -55,7 +55,7 @@ private:
     void RemoveIndent();
 
 private:
-    std::string indent_{};
+    std::string indent_;
     std::string indent_step_;
     bool use_newlines_;
 };

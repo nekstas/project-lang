@@ -6,7 +6,7 @@
 #include "../../../../utils/better_stack.hpp"
 #include "../../../context/base_context.h"
 #include "../../../source/token.hpp"
-#include "../lexer.h"
+#include "../lexer.hpp"
 
 namespace lib::lang::frontend::impl {
 

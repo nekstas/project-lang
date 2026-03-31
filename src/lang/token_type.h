@@ -34,6 +34,8 @@
                            \
     X(PLUS_O)              \
     X(MINUS_O)             \
+    X(STAR_O)              \
+    X(SLASH_O)             \
                            \
     X(EQ_O)                \
     X(NE_O)                \
@@ -42,7 +44,7 @@
     X(LE_O)                \
     X(GE_O)                \
                            \
-    X(NUMBER)              \
+    X(INT_LITERAL)         \
     X(IDENTIFIER)
 
 namespace lang {

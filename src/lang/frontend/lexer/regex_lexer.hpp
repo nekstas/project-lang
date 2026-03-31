@@ -49,6 +49,8 @@ private:
 
         Super::AddToken(TokenType::PLUS_O, "\\+");
         Super::AddToken(TokenType::MINUS_O, "-");
+        Super::AddToken(TokenType::STAR_O, "\\*");
+        Super::AddToken(TokenType::SLASH_O, "/");
 
         Super::AddToken(TokenType::EQ_O, "==");
         Super::AddToken(TokenType::NE_O, "!=");
@@ -57,7 +59,7 @@ private:
         Super::AddToken(TokenType::GT_O, ">");
         Super::AddToken(TokenType::GE_O, ">=");
 
-        Super::AddToken(TokenType::NUMBER, "\\d+", HasValue::TRUE);
+        Super::AddToken(TokenType::INT_LITERAL, "\\d+", HasValue::TRUE);
         Super::AddToken(TokenType::IDENTIFIER, "[a-zA-Z_]\\w*", HasValue::TRUE);
 
         Super::Build(TokenType::END_OF_FILE);

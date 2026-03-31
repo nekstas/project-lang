@@ -2,12 +2,12 @@
 
 #include <sstream>
 
-#include "../utils/indentable.h"
+#include "../../utils/indentable.h"
 #include "visitor.h"
 
 namespace lib::regex::visitors {
 
-class AstPrinter : public utils::Indentable, public Visitor {
+class AstPrinter : public ::utils::Indentable, public Visitor {
 public:
     using Indentable::Indentable;
 

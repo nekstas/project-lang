@@ -31,6 +31,23 @@ public:
         return span_;
     }
 
+    bool Is(TokenType type) const {
+        return type_ == type;
+    }
+
+    bool Is(std::initializer_list<TokenType> types) const {
+        for (auto type : types) {
+            if (type_ == type) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool Is(const Token& token) const {
+        return type_ == token.type_ && value_ == token.value_;
+    }
+
 protected:
     TokenType type_;
     std::string value_;
