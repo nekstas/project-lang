@@ -43,7 +43,6 @@ protected:
 
     uint8_t Consume() {
         THROW_REGEX_PARSER_ERROR_IF(IsEof(), "Unexpected eof.");
-        assert(!IsEof());
         return code_[pos_++];
     }
 
