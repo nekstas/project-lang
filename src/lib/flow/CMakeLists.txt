@@ -1,4 +1,6 @@
-add_library(lib_flow STATIC
+add_library(lib_flow INTERFACE)
+
+target_sources(lib_flow INTERFACE
     stage.hpp
     typed_stage.hpp
     dynamic_pipeline.hpp
@@ -9,4 +11,4 @@ add_library(lib_flow STATIC
     titled_pipeline.h
 )
 
-target_link_libraries(lib_flow PRIVATE lib_errors lib_utils)
+target_link_libraries(lib_flow INTERFACE lib_errors lib_utils)

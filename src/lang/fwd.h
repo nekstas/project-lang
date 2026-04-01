@@ -46,6 +46,7 @@ class Visitor;
 namespace visitors {
 
 class AstPrinter;
+class Interpreter;
 
 }
 

@@ -10,3 +10,7 @@ FetchContent_MakeAvailable(Catch2)
 add_executable(test_lib)
 target_link_libraries(test_lib PRIVATE Catch2::Catch2WithMain)
 add_subdirectory(lib/regex)
+
+add_executable(test_lang)
+target_link_libraries(test_lang PRIVATE Catch2::Catch2WithMain)
+add_subdirectory(lang)

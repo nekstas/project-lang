@@ -91,12 +91,13 @@ void AstPrinter::Visit(const stmt::FunctionDefineNode& stmt) {
         {
             utils::WithIndent with_indent_2{*this};
             for (const auto& parameter : stmt.GetParameters()) {
-                Line(out_) << "<Parameter " << std::quoted(parameter.name)
-                           << " mutable=" << (parameter.is_mutable ? "true" : "false");
+                auto line = Line(out_);
+                line << "<Parameter " << std::quoted(parameter.name)
+                     << " mutable=" << (parameter.is_mutable ? "true" : "false");
                 if (parameter.type_name.has_value()) {
-                    out_ << " type=" << std::quoted(*parameter.type_name);
+                    line << " type=" << std::quoted(*parameter.type_name);
                 }
-                out_ << ">\n";
+                line << ">";
             }
         }
         Line(out_) << "</Parameters>";
@@ -173,12 +174,13 @@ void AstPrinter::Visit(const stmt::BlockStatement& stmt) {
 }
 
 void AstPrinter::Visit(const stmt::VariableDeclareStatement& stmt) {
-    Line(out_) << "<VariableDeclareStatement " << std::quoted(stmt.GetVariableName())
-               << " mutable=" << (stmt.IsMutable() ? "true" : "false");
+    auto line = Line(out_);
+    line << "<VariableDeclareStatement " << std::quoted(stmt.GetVariableName())
+         << " mutable=" << (stmt.IsMutable() ? "true" : "false");
     if (stmt.GetTypeName().has_value()) {
-        out_ << " type=" << std::quoted(*stmt.GetTypeName());
+        line << " type=" << std::quoted(*stmt.GetTypeName());
     }
-    out_ << ">\n";
+    line << ">";
     {
         utils::WithIndent with_indent{*this};
         if (stmt.HasInitialValue()) {

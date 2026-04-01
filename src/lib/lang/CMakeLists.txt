@@ -4,6 +4,7 @@ add_library(lib_lang STATIC
     source/line_column.cpp
     source/line_column_length.cpp
     source/file.cpp
+    source/program.cpp
     source/path.cpp
     frontend/file_reader/file_reader.hpp
     diag/diag.cpp

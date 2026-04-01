@@ -8,6 +8,7 @@ add_library(lang STATIC
     ast/expr/function_call_expression.cpp
     ast/expr/variable_expression.cpp
     ast/visitors/ast_printer.cpp
+    ast/visitors/interpreter.cpp
     ast/expr/binary_expression.cpp
     ast/stmt/function_define_node.cpp
     ast/stmt/if_statement.cpp

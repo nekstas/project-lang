@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <iosfwd>
 
 namespace lib::lang::source {
 
