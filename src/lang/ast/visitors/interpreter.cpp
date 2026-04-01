@@ -54,34 +54,44 @@ void Interpreter::Visit(const expr::BinaryExpression& expr) {
     using Op = ast::enums::BinaryOperation;
     switch (expr.GetOperation()) {
         case Op::SUM:
+            CountRuntime(limits::kMaxRuntimeAdditions);
             expression_value_ = left + right;
             break;
         case Op::SUB:
+            CountRuntime(limits::kMaxRuntimeSubtractions);
             expression_value_ = left - right;
             break;
         case Op::MUL:
+            CountRuntime(limits::kMaxRuntimeMultiplications);
             expression_value_ = left * right;
             break;
         case Op::DIV:
+            CountRuntime(limits::kMaxRuntimeDivisions);
             ThrowRuntimeErrorIf(right == 0, "Division by zero.");
             expression_value_ = left / right;
             break;
         case Op::EQ:
+            CountRuntime(limits::kMaxRuntimeComparisons);
             expression_value_ = left == right ? 1 : 0;
             break;
         case Op::NE:
+            CountRuntime(limits::kMaxRuntimeComparisons);
             expression_value_ = left != right ? 1 : 0;
             break;
         case Op::LT:
+            CountRuntime(limits::kMaxRuntimeComparisons);
             expression_value_ = left < right ? 1 : 0;
             break;
         case Op::LE:
+            CountRuntime(limits::kMaxRuntimeComparisons);
             expression_value_ = left <= right ? 1 : 0;
             break;
         case Op::GT:
+            CountRuntime(limits::kMaxRuntimeComparisons);
             expression_value_ = left > right ? 1 : 0;
             break;
         case Op::GE:
+            CountRuntime(limits::kMaxRuntimeComparisons);
             expression_value_ = left >= right ? 1 : 0;
             break;
         default:
@@ -95,6 +105,7 @@ void Interpreter::Visit(const expr::UnaryExpression& expr) {
     using Op = ast::enums::UnaryOperation;
     switch (expr.GetOperation()) {
         case Op::NEG:
+            CountRuntime(limits::kMaxRuntimeUnaryNegations);
             expression_value_ = -value;
             break;
         default:
@@ -103,6 +114,8 @@ void Interpreter::Visit(const expr::UnaryExpression& expr) {
 }
 
 void Interpreter::Visit(const expr::FunctionCallExpression& expr) {
+    CountRuntime(limits::kMaxRuntimeExecutedFunctionCalls);
+
     std::vector<Int> arguments;
     arguments.reserve(expr.GetArguments().size());
     for (const auto& argument : expr.GetArguments()) {
@@ -111,6 +124,7 @@ void Interpreter::Visit(const expr::FunctionCallExpression& expr) {
 
     const std::string& function_name = expr.GetFunctionName();
     if (function_name == "print") {
+        CountRuntime(limits::kMaxRuntimePrintCalls);
         ThrowRuntimeErrorIf(
             arguments.size() != 1, "Function \"print\" expects exactly 1 argument.");
         out_ << arguments[0] << "\n";
@@ -119,6 +133,7 @@ void Interpreter::Visit(const expr::FunctionCallExpression& expr) {
     }
 
     if (function_name == "input") {
+        CountRuntime(limits::kMaxRuntimeInputCalls);
         ThrowRuntimeErrorIf(!arguments.empty(), "Function \"input\" expects no arguments.");
         Int value = 0;
         in_ >> value;
@@ -141,12 +156,14 @@ void Interpreter::Visit(const stmt::FunctionDefineNode& stmt) {
 }
 
 void Interpreter::Visit(const stmt::IfStatement& stmt) {
+    CountRuntime(limits::kMaxRuntimeExecutedIf);
     if (IsTruthy(Eval(stmt.GetCondition()))) {
         stmt.GetThenBlock().Accept(*this);
     }
 }
 
 void Interpreter::Visit(const stmt::IfElseStatement& stmt) {
+    CountRuntime(limits::kMaxRuntimeExecutedIf);
     if (IsTruthy(Eval(stmt.GetCondition()))) {
         stmt.GetThenBlock().Accept(*this);
     } else {
@@ -156,6 +173,7 @@ void Interpreter::Visit(const stmt::IfElseStatement& stmt) {
 
 void Interpreter::Visit(const stmt::WhileStatement& stmt) {
     while (IsTruthy(Eval(stmt.GetCondition()))) {
+        CountRuntime(limits::kMaxRuntimeExecutedWhileIterations);
         stmt.GetBody().Accept(*this);
         if (is_returning_) {
             break;
@@ -175,6 +193,7 @@ void Interpreter::Visit(const stmt::BlockStatement& stmt) {
 }
 
 void Interpreter::Visit(const stmt::VariableDeclareStatement& stmt) {
+    CountRuntime(limits::kMaxRuntimeExecutedVariableDeclarations);
     auto& scope = CurrentScope();
     ThrowRuntimeErrorIf(scope.contains(stmt.GetVariableName()),
         utils::FormatStream() << "Variable \"" << stmt.GetVariableName()
@@ -185,6 +204,7 @@ void Interpreter::Visit(const stmt::VariableDeclareStatement& stmt) {
 }
 
 void Interpreter::Visit(const stmt::AssignmentStatement& stmt) {
+    CountRuntime(limits::kMaxRuntimeExecutedAssignments);
     auto& variable = GetVariable(stmt.GetVariableName());
     ThrowRuntimeErrorIf(!variable.is_mutable,
         utils::FormatStream()
@@ -193,6 +213,7 @@ void Interpreter::Visit(const stmt::AssignmentStatement& stmt) {
 }
 
 void Interpreter::Visit(const stmt::ReturnStatement& stmt) {
+    CountRuntime(limits::kMaxRuntimeReturns);
     return_value_ = stmt.HasExpression() ? Eval(stmt.GetExpression()) : 0;
     is_returning_ = true;
 }
@@ -213,6 +234,24 @@ void Interpreter::ThrowRuntimeError(const std::string& message) {
 void Interpreter::ThrowRuntimeErrorIf(bool condition, const std::string& message) {
     if (condition) {
         ThrowRuntimeError(message);
+    }
+}
+
+void Interpreter::CountRuntime(const std::string& limit_key, Int delta) {
+    if (runtime_counters_ == nullptr) {
+        return;
+    }
+
+    runtime_counters_->Increment(limit_key, delta);
+    const Int actual = runtime_counters_->GetOrDefault(limit_key, 0);
+
+    if (limits_ == nullptr) {
+        return;
+    }
+
+    std::string error;
+    if (!limits::CheckLimit(*limits_, limit_key, actual, &error)) {
+        ThrowRuntimeError(error);
     }
 }
 

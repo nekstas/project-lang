@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "../../fwd.h"
+#include "../../limits/constraints.h"
 #include "../visitor.h"
 
 namespace lang::ast::visitors {
@@ -21,8 +22,9 @@ public:
 
 class Interpreter : public Visitor {
 public:
-    explicit Interpreter(std::istream& in = std::cin, std::ostream& out = std::cout)
-        : in_(in), out_(out) {}
+    explicit Interpreter(std::istream& in = std::cin, std::ostream& out = std::cout,
+        const limits::LimitsMap* limits = nullptr, limits::CounterMap* runtime_counters = nullptr)
+        : in_(in), out_(out), limits_(limits), runtime_counters_(runtime_counters) {}
 
     void Execute(const Node* node);
 
@@ -58,6 +60,7 @@ private:
     Int Eval(const Expression& expression);
     static void ThrowRuntimeError(const std::string& message);
     static void ThrowRuntimeErrorIf(bool condition, const std::string& message);
+    void CountRuntime(const std::string& limit_key, Int delta = 1);
 
     void PushScope();
     void PopScope();
@@ -75,6 +78,8 @@ private:
 private:
     std::istream& in_;
     std::ostream& out_;
+    const limits::LimitsMap* limits_ = nullptr;
+    limits::CounterMap* runtime_counters_ = nullptr;
 
     std::unordered_map<std::string, const stmt::FunctionDefineNode*> functions_;
     std::vector<Scope> scopes_;

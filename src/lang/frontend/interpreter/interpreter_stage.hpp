@@ -26,7 +26,18 @@ public:
 
     std::shared_ptr<ast::Node> Run(std::shared_ptr<ast::Node> node, Context& ctx) const {
         try {
-            ast::visitors::Interpreter interpreter{in_, out_};
+            const limits::LimitsMap* limits = nullptr;
+            limits::CounterMap* runtime_counters = nullptr;
+            if constexpr (requires(Context c) {
+                              c.limits;
+                              c.runtime_counters;
+                          }) {
+                ctx.runtime_counters = limits::CounterMap{};
+                limits = &ctx.limits;
+                runtime_counters = &ctx.runtime_counters;
+            }
+
+            ast::visitors::Interpreter interpreter{in_, out_, limits, runtime_counters};
             interpreter.Execute(node.get());
         } catch (const ast::visitors::InterpreterRuntimeError& err) {
             DIAG_REPORT(ctx, lang::diag::InterpreterRuntimeFatal, err.what());

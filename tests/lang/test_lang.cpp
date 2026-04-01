@@ -1,8 +1,12 @@
 #include <catch2/catch_test_macros.hpp>
 
+#include <cstdint>
+#include <initializer_list>
 #include <sstream>
 #include <string>
+#include <utility>
 
+#include "../../src/lang/context/lang_context.h"
 #include "../../src/lang/frontend/frontend.h"
 #include "../../src/lang/frontend/parser/recursive_descent_parser.hpp"
 #include "../../src/lang/frontend/tokens_filter/tokens_filter.hpp"
@@ -13,7 +17,7 @@
 
 namespace {
 
-struct Context : lib::lang::BaseContext {};
+using Context = lang::LangContext;
 
 template <lib::lang::ContextLike Ctx>
 class ReadProgram : public lib::flow::TypedStage<ReadProgram<Ctx>, Ctx, std::string, lib::lang::SourceDesc> {
@@ -33,15 +37,21 @@ struct RunResult {
     bool stopped = false;
 };
 
-RunResult RunProgram(const std::string& code, const std::string& input = "") {
+RunResult RunProgram(const std::string& code, const std::string& input = "",
+    std::initializer_list<std::pair<std::string, std::int64_t>> limits = {}) {
     std::istringstream in(input);
     std::ostringstream out;
 
     auto pipeline = lib::flow::MakeStaticNamedPipeline<Context>("LangPipeline",
         ReadProgram<Context>{}, lang::frontend::Lexer<Context>{}, lang::frontend::TokensFilter<Context>{},
-        lang::frontend::RecursiveDescentParser<Context>{}, lang::frontend::Interpreter<Context>{in, out});
+        lang::frontend::RecursiveDescentParser<Context>{}, lang::frontend::StaticConstraints<Context>{},
+        lang::frontend::Interpreter<Context>{in, out});
 
     Context ctx;
+    for (const auto& [key, value] : limits) {
+        ctx.limits.Set(key, value);
+    }
+
     RunResult result;
     try {
         (void)pipeline.Run(code, ctx);
@@ -363,6 +373,49 @@ fn main() {
         auto result = RunProgram(code);
         REQUIRE(result.stopped);
         REQUIRE(result.diagnostics.find("Syntax error:") != std::string::npos);
+    }
+
+    SECTION("Static limit via test format: max static functions") {
+        const std::string code = R"(
+fn f() {}
+fn main() {}
+)";
+        auto result = RunProgram(code, "", {{lang::limits::kMaxStaticFunctions, 1}});
+        RequireFatalContains(result, "max-static-functions");
+    }
+
+    SECTION("Static limit via test format: max static variable declarations") {
+        const std::string code = R"(
+fn main() {
+  let a: Int = 1;
+  let b: Int = 2;
+}
+)";
+        auto result = RunProgram(code, "", {{lang::limits::kMaxStaticVariableDeclarations, 1}});
+        RequireFatalContains(result, "max-static-variable-declarations");
+    }
+
+    SECTION("Runtime limit via test format: max additions") {
+        const std::string code = R"(
+fn main() {
+  print(1 + 2);
+}
+)";
+        auto result = RunProgram(code, "", {{lang::limits::kMaxRuntimeAdditions, 0}});
+        RequireFatalContains(result, "max-runtime-additions");
+    }
+
+    SECTION("Runtime limit via test format: max while iterations") {
+        const std::string code = R"(
+fn main() {
+  mut i: Int = 0;
+  while (i < 5) {
+    i = i + 1;
+  }
+}
+)";
+        auto result = RunProgram(code, "", {{lang::limits::kMaxRuntimeExecutedWhileIterations, 3}});
+        RequireFatalContains(result, "max-runtime-executed-while-iterations");
     }
 }
 
