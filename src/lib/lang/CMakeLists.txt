@@ -22,7 +22,7 @@ add_library(lib_lang STATIC
     render/line_highlight.cpp
     source/index.cpp
     errors/errors.cpp
-    frontend/tokens.hpp
+    types.hpp
 )
 
 target_link_libraries(lib_lang PRIVATE lib_errors lib_utils lib_flow)

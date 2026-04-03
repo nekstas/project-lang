@@ -20,7 +20,7 @@ int main() {
 
     Context ctx;
     try {
-        auto result = pipeline.Run("../../test.lang", ctx);
+        auto result = pipeline.Run("../../example.lang", ctx);
         for (auto token : result) {
             std::cout << token << "\n";
         }

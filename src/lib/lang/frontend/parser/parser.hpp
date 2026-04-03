@@ -4,7 +4,7 @@
 
 #include "../../../flow/typed_stage.hpp"
 #include "../../context/base_context.h"
-#include "../tokens.hpp"
+#include "../../types.hpp"
 
 namespace lib::lang::frontend {
 

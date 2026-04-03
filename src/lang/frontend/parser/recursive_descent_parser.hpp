@@ -15,9 +15,6 @@ namespace lang::frontend {
 
 namespace impl::parser {
 
-using Token = lib::lang::source::Token<TokenType>;
-using Tokens = lib::lang::frontend::Tokens<TokenType>;
-
 template <lib::lang::ContextLike Context>
 class RecursiveDescentParserBase {
 public:
