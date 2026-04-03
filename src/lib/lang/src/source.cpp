@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 Source::Source(const std::string& name, const std::string& content)
     : name_(name), content_(content), index_(content_) {}
@@ -22,4 +22,4 @@ std::ostream& operator<<(std::ostream& out, const Source& source) {
     return out;
 }
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

@@ -5,7 +5,7 @@
 #include "../../../../regex/dfa/dfa.h"
 #include "../../../../utils/better_stack.hpp"
 #include "../../../context/base_context.h"
-#include "../../../source/token.hpp"
+#include "../../../src/token.hpp"
 #include "../lexer.hpp"
 
 namespace lib::lang::frontend::impl {
@@ -95,12 +95,11 @@ public:
                 if (stack.top().state == kNoState) {
                     current = {.pos = begin_pos + 1, .state = kNoState};
                     break;
-                } else {
-                    current = stack.Extract();
                 }
+                current = stack.Extract();
             }
 
-            source::Span span = source::Span::FromRange(desc, begin_pos, current.pos);
+            src::Span span = src::Span::FromRange(desc, begin_pos, current.pos);
             size_t final_id = get_final_id();
             if (final_id == kNoFinalId) {
                 DIAG_REPORT(ctx, diag::UnexpectedSymbolError, span);
@@ -148,20 +147,20 @@ protected:
     }
 
 private:
-    source::Token<TokenType> ConstructToken(
-        const std::string& code, size_t final_id, const source::Span& span) const {
+    src::Token<TokenType> ConstructToken(
+        const std::string& code, size_t final_id, const src::Span& span) const {
         const auto& desc = token_descriptors_[final_id];
         std::string value = code.substr(span.GetOffset(), span.GetLength());
 
         if (desc.has_value) {
-            return source::Token<TokenType>(desc.type, value, span);
+            return src::Token<TokenType>(desc.type, value, span);
         }
-        return source::Token<TokenType>(desc.type, span);
+        return src::Token<TokenType>(desc.type, span);
     }
 
-    source::Token<TokenType> ConstructEofToken(SourceDesc desc, const Context& ctx) const {
+    src::Token<TokenType> ConstructEofToken(SourceDesc desc, const Context& ctx) const {
         const std::string& code = GetCode(desc, ctx);
-        source::Span span{desc, code.size(), code.size()};
+        src::Span span{desc, code.size(), code.size()};
         return ConstructToken(code, GetEofFinalId(), span);
     }
 

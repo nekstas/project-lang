@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "../../errors/errors.h"
-#include "../source/source.h"
+#include "../src/source.h"
 #include "../source_desc.h"
 #include "../stats/src/analyzer.h"
 
@@ -11,7 +11,7 @@ namespace lib::lang::engines {
 
 class Sources {
 public:
-    template <source::DerivedSource SourceType, typename... Args>
+    template <src::DerivedSource SourceType, typename... Args>
     SourceDesc AddSource(Args&&... args) {
         SourceDesc desc = AddSource(std::make_unique<SourceType>(std::forward<Args>(args)...));
         const auto& source = GetSource(desc);
@@ -19,7 +19,7 @@ public:
         return desc;
     }
 
-    const source::Source& GetSource(SourceDesc desc) const {
+    const src::Source& GetSource(SourceDesc desc) const {
         THROW_IF(desc.GetSourceId() >= Size(), ::errors::LogicError,
             "Unknown source with id = " << desc.GetSourceId() << " while there are only " << Size()
                                         << "sources.");
@@ -35,14 +35,14 @@ public:
     }
 
 private:
-    SourceDesc AddSource(std::unique_ptr<source::Source> source) {
+    SourceDesc AddSource(std::unique_ptr<src::Source> source) {
         size_t source_id = sources_.size();
         sources_.emplace_back(std::move(source));
         return SourceDesc{source_id};
     }
 
 private:
-    std::vector<std::unique_ptr<source::Source>> sources_;
+    std::vector<std::unique_ptr<src::Source>> sources_;
     stats::src::Analyzer stats_;
 };
 

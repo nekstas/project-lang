@@ -6,7 +6,7 @@
 #include "../../utils/utils.h"
 #include "../errors/errors.h"
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 Index::Index(const std::string& content) : content_(content) {
     Init();
@@ -81,4 +81,4 @@ void Index::CalculateLineLength(size_t end) {
     line_lengths_.push_back(length);
 }
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../../render/span.h"
-#include "../../source/span.h"
+#include "../../src/span.h"
 
 namespace lib::lang::diag {
 
 class SourceDiag : public Diag {
 public:
-    SourceDiag(Severity severity, const source::Span& span) : Diag(severity), span_(span) {}
+    SourceDiag(Severity severity, const src::Span& span) : Diag(severity), span_(span) {}
 
     virtual std::string GetSubMessage() const = 0;
 
@@ -18,17 +18,17 @@ public:
     }
 
 protected:
-    source::Span GetSpan() const {
+    src::Span GetSpan() const {
         return span_;
     }
 
 private:
-    source::Span span_;
+    src::Span span_;
 };
 
 class UnexpectedSymbolError : public SourceDiag {
 public:
-    explicit UnexpectedSymbolError(const source::Span& span) : SourceDiag(Severity::ERROR, span) {}
+    explicit UnexpectedSymbolError(const src::Span& span) : SourceDiag(Severity::ERROR, span) {}
 
     std::string GetSubMessage() const override {
         return "Unexpected symbol.";

@@ -4,7 +4,7 @@
 
 #include "../source_desc.h"
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 class Span {
 public:
@@ -39,4 +39,4 @@ protected:
     size_t length_;
 };
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

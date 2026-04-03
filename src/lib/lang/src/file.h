@@ -4,7 +4,7 @@
 #include "path.h"
 #include "source.h"
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 class File : public Source {
 public:
@@ -22,4 +22,4 @@ protected:
 
 std::ostream& operator<<(std::ostream& out, const File& file);
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

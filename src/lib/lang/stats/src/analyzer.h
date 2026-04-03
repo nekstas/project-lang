@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../source/source.h"
+#include "../../src/source.h"
 #include "stats.h"
 
 namespace lib::lang::stats::src {
@@ -11,7 +11,7 @@ public:
         return stats_;
     }
 
-    void AddSource(const source::Source& source) {
+    void AddSource(const ::lib::lang::src::Source& source) {
         size_t lines_count = source.GetIndex().GetLinesCount();
         ++stats_.files_count;
         stats_.max_lines_count = std::max(stats_.max_lines_count, lines_count);

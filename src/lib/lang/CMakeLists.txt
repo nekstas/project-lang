@@ -1,10 +1,12 @@
 add_library(lib_lang STATIC
-    source/token.hpp
-    source/span.cpp
-    source/line_column.cpp
-    source/line_column_length.cpp
-    source/file.cpp
-    source/path.cpp
+    src/token.hpp
+    src/span.cpp
+    src/line_column.cpp
+    src/line_column_length.cpp
+    src/file.cpp
+    src/path.cpp
+    src/source.cpp
+    src/index.cpp
     frontend/file_reader/file_reader.hpp
     diag/diag.cpp
     engines/diagnostics.cpp
@@ -14,13 +16,11 @@ add_library(lib_lang STATIC
     frontend/tokens_filter/tokens_filter.hpp
     frontend/tokens_filter/impl/simple_tokens_filter.hpp
     engines/sources.cpp
-    source/source.cpp
     stats/src/stats.cpp
     stats/src/analyzer.cpp
     render/span.cpp
     render/line_span.cpp
     render/line_highlight.cpp
-    source/index.cpp
     errors/errors.cpp
     types.hpp
 )

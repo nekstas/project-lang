@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <iostream>
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 class Path {
 public:
@@ -29,4 +29,4 @@ protected:
 
 std::ostream& operator<<(std::ostream& out, const Path& path);
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

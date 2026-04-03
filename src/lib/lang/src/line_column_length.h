@@ -2,7 +2,7 @@
 
 #include <ostream>
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 class LineColumnLength {
 public:
@@ -28,4 +28,4 @@ protected:
 
 std::ostream& operator<<(std::ostream& out, const LineColumnLength& pos);
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

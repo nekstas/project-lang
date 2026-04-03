@@ -2,27 +2,27 @@
 
 #include "../../errors/errors.h"
 #include "../../render/line_highlight.h"
-#include "../../source/path.h"
+#include "../../src/path.h"
 #include "../diag.h"
 
 namespace lib::lang::diag {
 
 class FileDiag : public Diag {
 public:
-    explicit FileDiag(Severity severity, const source::Path& path) : Diag(severity), path_(path) {}
+    explicit FileDiag(Severity severity, const src::Path& path) : Diag(severity), path_(path) {}
 
 protected:
-    source::Path GetPath() const {
+    src::Path GetPath() const {
         return path_;
     }
 
 private:
-    source::Path path_;
+    src::Path path_;
 };
 
 class FileFatal : public FileDiag {
 public:
-    explicit FileFatal(const source::Path& path) : FileDiag(Severity::FATAL, path) {}
+    explicit FileFatal(const src::Path& path) : FileDiag(Severity::FATAL, path) {}
 
     virtual std::string GetSubMessage() const = 0;
 
@@ -36,7 +36,7 @@ public:
 
 class CannotOpenFileFatal : public FileFatal {
 public:
-    explicit CannotOpenFileFatal(const source::Path& path) : FileFatal(path) {}
+    explicit CannotOpenFileFatal(const src::Path& path) : FileFatal(path) {}
 
     std::string GetSubMessage() const override {
         return "Cannot open file.";
@@ -45,7 +45,7 @@ public:
 
 class FileIOFatal : public FileFatal {
 public:
-    explicit FileIOFatal(const source::Path& path) : FileFatal(path) {}
+    explicit FileIOFatal(const src::Path& path) : FileFatal(path) {}
 
     std::string GetSubMessage() const override {
         return "I/O error while reading file.";
@@ -55,7 +55,7 @@ public:
 class FileInvalidEncodingFatal : public FileFatal {
 public:
     explicit FileInvalidEncodingFatal(
-        const source::Path& path, const errors::InvalidEncodingInfo& err_info)
+        const src::Path& path, const errors::InvalidEncodingInfo& err_info)
         : FileFatal(path), err_info_(err_info) {}
 
     std::string GetSubMessage() const override {

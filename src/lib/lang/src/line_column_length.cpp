@@ -1,6 +1,6 @@
 #include "line_column_length.h"
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 LineColumnLength::LineColumnLength(size_t line, size_t column, size_t length)
     : line_(line), column_(column), length_(length) {}
@@ -12,4 +12,4 @@ std::ostream& operator<<(std::ostream& out, const LineColumnLength& pos) {
     return out;
 }
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

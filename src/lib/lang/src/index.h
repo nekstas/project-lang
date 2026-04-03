@@ -7,7 +7,7 @@
 #include "line_column_length.h"
 #include "span.h"
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 class Index {
 public:
@@ -40,4 +40,4 @@ private:
     std::vector<size_t> line_lengths_;
 };
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

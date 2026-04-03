@@ -5,7 +5,7 @@
 
 #include "span.h"
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 template <typename TokenType>
 class Token {
@@ -63,4 +63,4 @@ std::ostream& operator<<(std::ostream& out, const Token<TokenType>& token) {
     return out << ">";
 }
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src

@@ -5,7 +5,7 @@
 #include "index.h"
 #include "line_column.h"
 
-namespace lib::lang::source {
+namespace lib::lang::src {
 
 class Source {
 public:
@@ -44,4 +44,4 @@ std::ostream& operator<<(std::ostream& out, const Source& source);
 template <typename T>
 concept DerivedSource = std::derived_from<T, Source>;
 
-}  // namespace lib::lang::source
+}  // namespace lib::lang::src
