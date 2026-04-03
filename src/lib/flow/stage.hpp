@@ -1,8 +1,9 @@
 #pragma once
 
-#include <any>
 #include <string>
 #include <typeindex>
+
+#include "../utils/move_only_any.h"
 
 namespace lib::flow {
 
@@ -11,7 +12,7 @@ class Stage {
 public:
     virtual ~Stage() {}
 
-    virtual std::any RunAny(std::any input, Context& ctx) const = 0;
+    virtual ::utils::MoveOnlyAny RunAny(::utils::MoveOnlyAny input, Context& ctx) const = 0;
     virtual std::type_index InputType() const = 0;
     virtual std::type_index OutputType() const = 0;
 

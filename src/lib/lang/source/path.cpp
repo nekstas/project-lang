@@ -1,6 +1,7 @@
 #include "path.h"
 
 #include <iomanip>
+#include <utility>
 
 lib::lang::source::Path::Path(const std::filesystem::path& original_path)
     : original_path_(original_path) {

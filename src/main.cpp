@@ -13,7 +13,7 @@ struct Context : lib::lang::BaseContext {};
 int main() {
     auto pipeline = lib::flow::MakeStaticNamedPipeline<Context>("LangPipeline",
         lang::frontend::ReadFile<Context>{}, lang::frontend::Lexer<Context>{},
-        lang::frontend::TokensFilter<Context>{}, lang::frontend::RecursiveDescentParser<Context>{});
+        lang::frontend::TokensFilter<Context>{});
 
     std::cout << "Hello, project-lang!\n";
     std::cout << pipeline.Name() << "\n";
@@ -21,9 +21,12 @@ int main() {
     Context ctx;
     try {
         auto result = pipeline.Run("../../test.lang", ctx);
-        lang::ast::visitors::AstPrinter ast_printer(2);
-        std::cout << "AST:\n";
-        std::cout << ast_printer.ToString(result.get());
+        for (auto token : result) {
+            std::cout << token << "\n";
+        }
+        // lang::ast::visitors::AstPrinter ast_printer(2);
+        // std::cout << "AST:\n";
+        // std::cout << ast_printer.ToString(result.get());
     } catch (const lib::flow::StopPipeline& stop_pipeline) {
         std::cerr << "Pipeline stopped: " << stop_pipeline.GetLocation() << "\n";
     }

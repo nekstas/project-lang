@@ -135,26 +135,26 @@ private:
 
 }  // namespace impl::parser
 
-template <lib::lang::ContextLike Context>
-class RecursiveDescentParser : public lib::lang::frontend::Parser<TokenType, ast::Node, Context> {
-public:
-    std::shared_ptr<ast::Node> Run(impl::parser::Tokens tokens, Context& ctx) const override {
-        std::cerr << "tokens.size() = " << tokens.size() << "\n";
-        for (const auto& token : tokens) {
-            std::cerr << token << "\n";
-        }
-        auto result = impl::parser::RecursiveDescentParser<Context>{tokens, ctx}.Parse();
-        return std::move(result);
-    }
-
-    std::string Name() const override {
-        return "RecursiveDescentParser";
-    }
-
-private:
-    using Super = lib::lang::frontend::Parser<TokenType, ast::Node, Context>;
-
-public:
-};
+// template <lib::lang::ContextLike Context>
+// class RecursiveDescentParser : public lib::lang::frontend::Parser<TokenType, ast::Node, Context> {
+// public:
+//     std::shared_ptr<ast::Node> Run(impl::parser::Tokens tokens, Context& ctx) const override {
+//         std::cerr << "tokens.size() = " << tokens.size() << "\n";
+//         for (const auto& token : tokens) {
+//             std::cerr << token << "\n";
+//         }
+//         auto result = impl::parser::RecursiveDescentParser<Context>{tokens, ctx}.Parse();
+//         return std::move(result);
+//     }
+//
+//     std::string Name() const override {
+//         return "RecursiveDescentParser";
+//     }
+//
+// private:
+//     using Super = lib::lang::frontend::Parser<TokenType, ast::Node, Context>;
+//
+// public:
+// };
 
 }  // namespace lang::frontend

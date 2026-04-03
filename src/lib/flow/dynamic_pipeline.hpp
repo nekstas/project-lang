@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 
+#include "../utils/move_only_any.h"
 #include "stage.hpp"
 #include "stop_pipeline.hpp"
 #include "titled_pipeline.h"
@@ -41,17 +42,17 @@ public:
     Out Run(In input, Context& ctx) const {
         THROW_IF(!ready_, ::errors::LogicError,
             "DynamicPipeline is not ready yet. (There are not marked last stage)");
-        std::any current = std::move(input);
+        ::utils::MoveOnlyAny current = std::move(input);
         for (const auto& stage : stages_) {
             try {
-                current = stage->RunAny(current, ctx);
+                current = stage->RunAny(std::move(current), ctx);
             } catch (StopPipeline& stop_pipeline) {
                 stop_pipeline.AddStageName(GetTitle());
                 throw;
             }
         }
-        assert(std::type_index(current.type()) == this->OutputType());
-        return std::any_cast<Out>(std::move(current));
+        assert(current.Type() == this->OutputType());
+        return current.Take<Out>();
     }
 
     std::string Name() const override {

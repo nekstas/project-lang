@@ -6,6 +6,9 @@
 
 namespace lang::frontend {
 
+using Token = lib::lang::source::Token<TokenType>;
+using Tokens = lib::lang::frontend::Tokens<TokenType>;
+
 template <lib::lang::ContextLike Context>
 using ReadFile = lib::lang::frontend::FileReader<Context>;
 
