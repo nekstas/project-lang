@@ -4,7 +4,7 @@
 #include <string>
 
 #include "../../../lib/errors/errors.h"
-#include "../../token_type.h"
+#include "../../enums/token_type.h"
 
 #define BINARY_OPERATION_LIST(X) \
     X(SUM, "+", PLUS_O)          \
@@ -38,10 +38,10 @@ inline std::string BinaryOperationToString(BinaryOperation operation) {
     }
 }
 
-inline BinaryOperation TokenTypeToBinaryOperation(TokenType token_type) {
+inline BinaryOperation TokenTypeToBinaryOperation(e::TokenType token_type) {
     switch (token_type) {
-#define X(name, symbol, token) \
-    case TokenType::token:     \
+#define X(name, symbol, token)          \
+    case lang::e::TokenType::token: \
         return BinaryOperation::name;
         BINARY_OPERATION_LIST(X)
 #undef X

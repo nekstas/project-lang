@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 
-#include "../lib/errors/errors.h"
+#include "../../lib/errors/errors.h"
 
 #define TOKEN_TYPE_LIST(X) \
     X(END_OF_FILE)         \
@@ -47,7 +47,7 @@
     X(INT_LITERAL)         \
     X(IDENTIFIER)
 
-namespace lang {
+namespace lang::e {
 
 enum class TokenType {
 #define X(name) name,
@@ -73,4 +73,4 @@ inline std::ostream& operator<<(std::ostream& out, TokenType token_type) {
     return out << TokenTypeToString(token_type);
 }
 
-}  // namespace lang
+}  // namespace lang::enums

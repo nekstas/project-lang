@@ -23,6 +23,9 @@ add_library(lib_lang STATIC
     render/line_highlight.cpp
     errors/errors.cpp
     types.hpp
+    cst/nodes/token_node.h
+    cst/rule.hpp
+    cst/rules/token_rule.h
 )
 
 target_link_libraries(lib_lang PRIVATE lib_errors lib_utils lib_flow)
