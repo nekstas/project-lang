@@ -2,9 +2,7 @@
 
 #include <cstddef>
 
-namespace lib::lang::engines {
-class Sources;
-}
+#include "fwd.h"
 
 namespace lib::lang {
 

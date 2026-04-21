@@ -23,6 +23,11 @@ add_library(lib_lang STATIC
     render/line_highlight.cpp
     errors/errors.cpp
     types.hpp
+    engines/symbols.cpp
+    symbols/scope.cpp
+    symbols/descriptor.cpp
+    llir/instruction_sequence.cpp
+    llir/visitors/instruction_stringifier.cpp
 )
 
 target_link_libraries(lib_lang PRIVATE lib_errors lib_utils lib_flow)

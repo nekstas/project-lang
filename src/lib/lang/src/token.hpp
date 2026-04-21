@@ -56,11 +56,11 @@ protected:
 
 template <typename TokenType>
 std::ostream& operator<<(std::ostream& out, const Token<TokenType>& token) {
-    out << "<" << token.GetType();
+    out << "(" << token.GetType();
     if (token.HasValue()) {
         out << ":" << std::quoted(token.GetValue());
     }
-    return out << ">";
+    return out << ")";
 }
 
 }  // namespace lib::lang::src

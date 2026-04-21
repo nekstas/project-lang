@@ -143,10 +143,14 @@ class RecursiveDescentParser
     : public lib::lang::frontend::Parser<e::TokenType, ast::Node, Context> {
 public:
     std::unique_ptr<ast::Node> Run(Tokens tokens, Context& ctx) const override {
-        std::cerr << "tokens.size() = " << tokens.size() << "\n";
+#ifdef DEBUG_TOKENS
+        std::cerr << "TOKENS (" << tokens.size() << "):\n";
         for (const auto& token : tokens) {
             std::cerr << token << "\n";
         }
+        std::cerr << "\n";
+#endif
+
         auto result = impl::parser::RecursiveDescentParser<Context>{tokens, ctx}.Parse();
         return std::move(result);
     }

@@ -8,6 +8,7 @@ add_library(lang STATIC
     backend/hlir/generator.hpp
     ast/visitors/hlir_generator.cpp
     hlir/visitors/hlir_printer.cpp
+    hlir/visitors/llir_generator.cpp
 )
 
 target_link_libraries(lang PRIVATE lib_errors lib_utils lib_regex lib_flow lib_lang)
