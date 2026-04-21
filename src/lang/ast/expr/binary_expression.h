@@ -2,15 +2,14 @@
 
 #include <memory>
 
-#include "../enums/binary_operation.h"
+#include "../../enums/binary_operation.h"
 #include "../expression.h"
-#include "../visitor.h"
 
 namespace lang::ast::expr {
 
 class BinaryExpression : public Expression {
 public:
-    BinaryExpression(enums::BinaryOperation operation, std::shared_ptr<Expression> left_expression,
+    BinaryExpression(e::BinaryOperation operation, std::shared_ptr<Expression> left_expression,
         std::shared_ptr<Expression> right_expression)
         : operation_(operation)
         , left_expression_(std::move(left_expression))
@@ -19,11 +18,11 @@ public:
         assert(right_expression_);
     }
 
-    void Accept(Visitor& visitor) const override {
-        visitor.Visit(*this);
-    }
+    // void Accept(Visitor& visitor) const override {
+    //     visitor.Visit(*this);
+    // }
 
-    enums::BinaryOperation GetOperation() const {
+    e::BinaryOperation GetOperation() const {
         return operation_;
     }
 
@@ -36,7 +35,7 @@ public:
     }
 
 private:
-    enums::BinaryOperation operation_;
+    e::BinaryOperation operation_;
     std::shared_ptr<Expression> left_expression_;
     std::shared_ptr<Expression> right_expression_;
 };

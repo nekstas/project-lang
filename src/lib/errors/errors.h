@@ -26,6 +26,7 @@
 #define NOT_IMPLEMENTED_YET              \
     THROW(::errors::NotImplementedError, \
         "Function " << __PRETTY_FUNCTION__ << " is not implemented yet")
+#define TEMP_ASSERT(condition) assert(condition)
 
 namespace errors {
 

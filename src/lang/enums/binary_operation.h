@@ -3,8 +3,8 @@
 #include <ostream>
 #include <string>
 
-#include "../../../lib/errors/errors.h"
-#include "../../enums/token_type.h"
+#include "../../lib/errors/errors.h"
+#include "../enums/token_type.h"
 
 #define BINARY_OPERATION_LIST(X) \
     X(SUM, "+", PLUS_O)          \
@@ -18,7 +18,7 @@
     X(GT, ">", GT_O)             \
     X(GE, ">=", GE_O)
 
-namespace lang::ast::enums {
+namespace lang::e {
 
 enum class BinaryOperation {
 #define X(name, symbol, token) name,
@@ -40,7 +40,7 @@ inline std::string BinaryOperationToString(BinaryOperation operation) {
 
 inline BinaryOperation TokenTypeToBinaryOperation(e::TokenType token_type) {
     switch (token_type) {
-#define X(name, symbol, token)          \
+#define X(name, symbol, token)      \
     case lang::e::TokenType::token: \
         return BinaryOperation::name;
         BINARY_OPERATION_LIST(X)
@@ -56,4 +56,4 @@ inline std::ostream& operator<<(std::ostream& out, BinaryOperation operation) {
     return out << BinaryOperationToString(operation);
 }
 
-}  // namespace lang::ast::enums
+}  // namespace lang::enums

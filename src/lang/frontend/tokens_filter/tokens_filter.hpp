@@ -7,12 +7,13 @@
 namespace lang::frontend {
 
 template <lib::lang::ContextLike Context>
-class TokensFilter : public lib::lang::frontend::impl::SimpleTokensFilter<e::TokenType, Context> {
+class SimpleTokensFilter
+    : public lib::lang::frontend::impl::SimpleTokensFilter<e::TokenType, Context> {
 private:
     using Super = lib::lang::frontend::impl::SimpleTokensFilter<e::TokenType, Context>;
 
 public:
-    TokensFilter() {
+    SimpleTokensFilter() {
         FillDeniedTokens();
     }
 

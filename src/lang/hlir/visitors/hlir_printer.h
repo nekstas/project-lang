@@ -6,9 +6,9 @@
 #include "../../fwd.h"
 #include "../visitor.h"
 
-namespace lang::ast::visitors {
+namespace lang::hlir::visitors {
 
-class AstPrinter : public ::utils::Indentable, public Visitor {
+class HlirPrinter : public ::utils::Indentable, public Visitor {
 public:
     using Indentable::Indentable;
 
@@ -16,10 +16,9 @@ public:
 
 public:
     void Visit(const expr::lit::IntLiteral& lit) override;
-    // void Visit(const expr::BinaryExpression& expr) override;
 
 private:
     std::stringstream out_;
 };
 
-}  // namespace lang::ast::visitors
+}  // namespace lang::hlir::visitors
