@@ -133,4 +133,14 @@ std::optional<uint8_t> ParseHexByte(const std::string& sequence) {
     return result;
 }
 
+std::optional<int64_t> ParseInt64(const std::string& value) {
+    int64_t result = 0;
+    auto end = value.data() + value.size();
+    auto [ptr, ec] = std::from_chars(value.data(), end, result);
+    if (ec != std::errc{} || ptr != end) {
+        return std::nullopt;
+    }
+    return result;
+}
+
 }  // namespace utils
