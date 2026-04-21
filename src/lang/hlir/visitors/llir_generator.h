@@ -21,6 +21,7 @@ private:
     lib::lang::BaseContext& ctx_;
     lib::lang::structure::Module result_;
     lib::lang::structure::InstructionSequence sequence_;
+    lib::lang::symbols::Scope* current_scope_;
     lib::lang::symbols::TempVariableDescriptor* last_temp_var_;
 };
 

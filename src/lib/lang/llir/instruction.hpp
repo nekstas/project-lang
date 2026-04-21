@@ -12,13 +12,13 @@ public:
 };
 
 template <typename T>
-const T* CastNode(const Instruction* node) {
-    return dynamic_cast<const T*>(node);
+const T* CastInstruction(const Instruction* instr) {
+    return dynamic_cast<const T*>(instr);
 }
 
 template <typename T>
-T* CastNode(Instruction* node) {
-    return dynamic_cast<T*>(node);
+T* CastInstruction(Instruction* instr) {
+    return dynamic_cast<T*>(instr);
 }
 
 }  // namespace lib::lang::llir

@@ -12,6 +12,9 @@
 namespace lib::lang::symbols {
 
 class Scope {
+private:
+    using DescriptorsMap = std::unordered_map<std::string, std::unique_ptr<Descriptor>>;
+
 public:
     virtual ~Scope() {}
 
@@ -23,8 +26,26 @@ public:
 
     Descriptor* AddDescriptor(std::unique_ptr<Descriptor> descriptor);
 
+    DescriptorsMap& GetDescriptors() {
+        return descriptors_;
+    }
+
+    const DescriptorsMap& GetDescriptors() const {
+        return descriptors_;
+    }
+
 private:
-    std::unordered_map<std::string, std::unique_ptr<Descriptor>> descriptors_;
+    DescriptorsMap descriptors_;
 };
+
+template <typename T>
+const T* CastScope(const Scope* scope) {
+    return dynamic_cast<const T*>(scope);
+}
+
+template <typename T>
+T* CastScope(Scope* scope) {
+    return dynamic_cast<T*>(scope);
+}
 
 }  // namespace lib::lang::symbols

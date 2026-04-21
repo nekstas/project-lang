@@ -2,14 +2,14 @@
 
 #include "../../../utils/format_stream.h"
 #include "../consts.h"
-#include "value_descriptor.h"
+#include "local_value_descriptor.h"
 
 namespace lib::lang::symbols {
 
-class TempVariableDescriptor : public ValueDescriptor {
+class TempVariableDescriptor : public LocalValueDescriptor {
 public:
     explicit TempVariableDescriptor(size_t number)
-        : ValueDescriptor(e::Mutable::FALSE), number_(number) {}
+        : LocalValueDescriptor(e::Mutable::FALSE), number_(number) {}
 
     size_t GetNumber() const {
         return number_;

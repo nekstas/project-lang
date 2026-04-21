@@ -8,7 +8,14 @@ class Descriptor;
 class Scope;
 class SymbolTable;
 
+class ValueDescriptor;
+class StackValueDescriptor;
+class LocalValueDescriptor;
 class TempVariableDescriptor;
+class FunctionDescriptor;
+
+class FunctionScope;
+class GlobalScope;
 
 }  // namespace symbols
 

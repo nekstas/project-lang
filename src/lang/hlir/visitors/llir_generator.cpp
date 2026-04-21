@@ -12,14 +12,15 @@ lib::lang::structure::Module LlirGenerator::Generate(const Node* ast) {
 
     // TODO: подвинуть в более подходящее место
     sequence_ = {};
+    auto scope = ctx_.symbols.AddScope<lib::lang::symbols::GlobalScope>();
+    auto desc = scope->CreateFunction("main", ctx_);
+    current_scope_ = desc->GetFunctionScope();
 
     if (ast) {
         ast->Accept(*this);
     }
 
     // TODO: подвинуть в более подходящее место
-    auto scope = ctx_.symbols.AddScope<lib::lang::symbols::GlobalScope>();
-    auto desc = scope->CreateFunction("main");
     lib::lang::structure::Function function(desc, std::move(sequence_));
     result_.AddFunction(std::move(function));
 
@@ -27,7 +28,8 @@ lib::lang::structure::Module LlirGenerator::Generate(const Node* ast) {
 }
 
 void LlirGenerator::Visit(const expr::lit::IntLiteral& lit) {
-    auto scope = ctx_.symbols.AddScope<lib::lang::symbols::FunctionScope>();
+    auto scope = CastScope<lib::lang::symbols::FunctionScope>(current_scope_);
+    TEMP_ASSERT(scope);
     last_temp_var_ = scope->CreateTempVar();
     sequence_.AddInstruction<lib::lang::llir::instr::LoadInt64>(last_temp_var_, lit.GetValue());
 }

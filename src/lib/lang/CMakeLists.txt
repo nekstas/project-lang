@@ -32,6 +32,10 @@ add_library(lib_lang STATIC
     structure/module.cpp
     cfg/basic_block.cpp
     cfg/control_flow_graph.cpp
+    asm/unit.hpp
+    asm/gas_x86_64/visitors/intel_stringifier.cpp
+    asm/gas_x86_64/visitors/stringifier_base.cpp
+    backend/asm/gas_x86_64/data/frame_layout.cpp
 )
 
 target_link_libraries(lib_lang PRIVATE lib_errors lib_utils lib_flow)

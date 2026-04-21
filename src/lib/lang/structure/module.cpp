@@ -5,7 +5,7 @@ namespace lib::lang::structure {
 std::ostream& operator<<(std::ostream& out, const Module& module) {
     out << "=== Module (" << module.GetFunctionsCount() << " functions) ===\n";
     for (const auto& function : module.GetFunctions()) {
-        out << function;
+        out << *function;
     }
     return out;
 }
