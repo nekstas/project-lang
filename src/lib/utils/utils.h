@@ -23,4 +23,6 @@ std::optional<uint8_t> ParseHexByte(const std::string& sequence);
 
 std::optional<int64_t> ParseInt64(const std::string& value);
 
+size_t AlignUp(size_t x, size_t y);
+
 }  // namespace utils

@@ -143,4 +143,8 @@ std::optional<int64_t> ParseInt64(const std::string& value) {
     return result;
 }
 
+size_t AlignUp(size_t x, size_t y) {
+    return (x + y - 1) / y * y;
+}
+
 }  // namespace utils
