@@ -15,7 +15,7 @@ private:
     using Super = lib::lang::backend::llir::Generator<lang::hlir::Node, Context>;
 
 public:
-    lib::lang::llir::InstructionSequence Run(Super::HlirNodePtr ast, Context& ctx) const override {
+    lib::lang::structure::Module Run(Super::HlirNodePtr ast, Context& ctx) const override {
 #ifdef DEBUG_HLIR
         lang::hlir::visitors::HlirPrinter hlir_printer(2);
         std::cerr << "HLIR:\n";

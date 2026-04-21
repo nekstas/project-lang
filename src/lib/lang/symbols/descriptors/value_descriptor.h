@@ -5,8 +5,6 @@
 
 namespace lib::lang::symbols {
 
-enum class Mutable {};
-
 class ValueDescriptor : public Descriptor {
 public:
     explicit ValueDescriptor(e::Mutable is_mutable) : mutable_(is_mutable) {}

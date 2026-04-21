@@ -26,8 +26,12 @@ add_library(lib_lang STATIC
     engines/symbols.cpp
     symbols/scope.cpp
     symbols/descriptor.cpp
-    llir/instruction_sequence.cpp
+    structure/instruction_sequence.cpp
     llir/visitors/instruction_stringifier.cpp
+    structure/function.cpp
+    structure/module.cpp
+    cfg/basic_block.cpp
+    cfg/control_flow_graph.cpp
 )
 
 target_link_libraries(lib_lang PRIVATE lib_errors lib_utils lib_flow)

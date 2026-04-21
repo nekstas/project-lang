@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 
-#include "instruction.hpp"
+#include "../llir/instruction.hpp"
 
-namespace lib::lang::llir {
+namespace lib::lang::structure {
 
 class InstructionSequence {
 public:
@@ -15,20 +15,20 @@ public:
         AddInstruction(std::make_unique<InstructionType>(std::forward<Args>(args)...));
     }
 
-    void AddInstruction(std::unique_ptr<Instruction> instruction);
+    void AddInstruction(std::unique_ptr<llir::Instruction> instruction);
 
     size_t Size() const {
         return instructions_.size();
     }
 
-    const std::vector<std::unique_ptr<Instruction>>& GetInstructions() const {
+    const std::vector<std::unique_ptr<llir::Instruction>>& GetInstructions() const {
         return instructions_;
     }
 
 private:
-    std::vector<std::unique_ptr<Instruction>> instructions_;
+    std::vector<std::unique_ptr<llir::Instruction>> instructions_;
 };
 
 std::ostream& operator<<(std::ostream& out, const InstructionSequence& instruction_sequence);
 
-}  // namespace lib::lang::llir
+}  // namespace lib::lang::structure

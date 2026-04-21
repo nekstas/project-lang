@@ -23,16 +23,8 @@ public:
 
     Descriptor* AddDescriptor(std::unique_ptr<Descriptor> descriptor);
 
-    TempVariableDescriptor* CreateTempVar() {
-        return AddDescriptor<TempVariableDescriptor>(auto_ids_.NextId(kTempVariablesCounter));
-    }
-
 private:
     std::unordered_map<std::string, std::unique_ptr<Descriptor>> descriptors_;
-
-protected:
-    static constexpr size_t kTempVariablesCounter = 0;
-    utils::AutoIds<1> auto_ids_ = {};
 };
 
 }  // namespace lib::lang::symbols
