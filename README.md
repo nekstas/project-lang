@@ -1,4 +1,9 @@
 # project-lang
-Репозиторий моего курсового проекта на 3 курсе (собственный учебный язык программирования).
+Репозиторий моего курсового проекта (собственный учебный язык программирования).
 
-Текущий исходный код проекта содержится в ветке https://github.com/nekstas/project-lang/tree/interpreter.
+### 3 курс
+
+- Исходный код простого интерпретатора содержится в ветке https://github.com/nekstas/project-lang/tree/cw3-interpreter.
+- Исходный код основы для будущего компилятора содержится в ветке https://github.com/nekstas/project-lang/tree/cw3-final-state.
+
+Текущий исходный код проекта содержится в ветке https://github.com/nekstas/project-lang/tree/dev.
