@@ -147,4 +147,33 @@ size_t AlignUp(size_t x, size_t y) {
     return (x + y - 1) / y * y;
 }
 
+uint64_t NumToAbs(int64_t num) {
+    if (num < 0) {
+        return static_cast<uint64_t>(-(num + 1)) + 1;
+    }
+    return num;
+}
+
+std::string FormatDiff(int64_t diff, bool use_spaces) {
+    if (diff == 0) {
+        return "";
+    }
+
+    std::stringstream out;
+    if (use_spaces) {
+        out << " ";
+    }
+    if (diff > 0) {
+        out << "+";
+    } else {
+        out << "-";
+    }
+    if (use_spaces) {
+        out << " ";
+    }
+    out << NumToAbs(diff);
+
+    return out.str();
+}
+
 }  // namespace utils

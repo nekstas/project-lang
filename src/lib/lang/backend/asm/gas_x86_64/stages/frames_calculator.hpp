@@ -35,7 +35,7 @@ public:
             }
 
             frame_layout.End();
-            ctx.frames[function.get()] = frame_layout;
+            ctx.frames[desc] = frame_layout;
         }
 
         return std::move(module);

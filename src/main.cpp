@@ -22,9 +22,9 @@ int main() {
     Context ctx;
     try {
         auto result = pipeline.Run("../../test.lang", ctx);
-        lib::lang::asm_::gas_x86_64::IntelStringifier stringifier;
+        lib::lang::asm_::gas_x86_64::IntelStringifier stringifier(4);
         std::cerr << "ASM:\n";
-        std::cerr << stringifier.ToString(result) << "\n";
+        std::cerr << stringifier.ToString(std::move(result)) << "\n";
     } catch (const lib::flow::StopPipeline& stop_pipeline) {
         std::cerr << "Pipeline stopped: " << stop_pipeline.GetLocation() << "\n";
     }

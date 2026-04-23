@@ -9,6 +9,8 @@ public:
     virtual ~Line() {}
 
     virtual void Accept(Visitor& visitor) const = 0;
+
+    virtual bool NeedIndent() const = 0;
 };
 
 template <typename T>

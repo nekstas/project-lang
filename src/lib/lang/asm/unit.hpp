@@ -17,13 +17,17 @@ public:
         lines_.emplace_back(std::move(line));
     }
 
+    void AddEmptyLine() {
+        AddLine(nullptr);
+    }
+
     template <typename LineType, typename... Args>
     void InsertLine(size_t index, Args&&... args) {
         InsertLine(index, std::make_unique<LineType>(std::forward<Args>(args)...));
     }
 
     void InsertLine(size_t index, std::unique_ptr<AsmLine> line) {
-        lines_.emplace(index, std::move(line));
+        lines_.insert(lines_.begin() + index, std::move(line));
     }
 
     size_t Size() const {

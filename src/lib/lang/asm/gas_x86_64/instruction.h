@@ -7,6 +7,9 @@ namespace lib::lang::asm_::gas_x86_64 {
 
 class Instruction : public Line {
 public:
+    bool NeedIndent() const override {
+        return true;
+    }
 };
 
 }  // namespace lib::lang::asm_::gas_x86_64

@@ -1,17 +1,17 @@
 #pragma once
 
 #include "../directive.h"
-#include "../enums/intel_syntax.h"
+#include "../enums/section.h"
 #include "../visitor.h"
 
 namespace lib::lang::asm_::gas_x86_64::dir {
 
-class IntelSyntax : public Directive {
+class Section : public Directive {
 public:
-    explicit IntelSyntax(e::IntelSyntax intel_syntax) : intel_syntax_(intel_syntax) {}
+    explicit Section(e::Section section) : section_(section) {}
 
-    e::IntelSyntax GetIntelSyntax() const {
-        return intel_syntax_;
+    e::Section GetSection() const {
+        return section_;
     }
 
     void Accept(Visitor& visitor) const override {
@@ -19,7 +19,7 @@ public:
     }
 
 private:
-    e::IntelSyntax intel_syntax_;
+    e::Section section_;
 };
 
 }  // namespace lib::lang::asm_::gas_x86_64::dir

@@ -36,6 +36,9 @@ add_library(lib_lang STATIC
     asm/gas_x86_64/visitors/intel_stringifier.cpp
     asm/gas_x86_64/visitors/stringifier_base.cpp
     backend/asm/gas_x86_64/data/frame_layout.cpp
+    asm/gas_x86_64/operand.cpp
+    asm/gas_x86_64/memory.cpp
+    backend/asm/gas_x86_64/impl/llir_to_asm.cpp
 )
 
 target_link_libraries(lib_lang PRIVATE lib_errors lib_utils lib_flow)
